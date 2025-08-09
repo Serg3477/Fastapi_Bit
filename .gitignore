@@ -13,3 +13,71 @@ __pycache__/
 # OS
 .DS_Store
 Thumbs.db
+
+
+# Jupyter Notebook
+.ipynb_checkpoints/
+# VS Code
+.vscode/
+# Coverage
+.coverage
+.coverage.*
+*.cover
+# Pytest
+.cache/
+# Sphinx
+_build/
+# PyInstaller
+# PyInstaller
+*.spec
+# mypy
+.mypy_cache/
+.mypy.ini
+# Bandit
+.bandit/
+# Pyre
+.pyre/
+# Pytype
+.pytype/
+# Pylint
+.pylint.d/
+# Flake8
+.flake8
+# Black
+.pyproject.toml
+# isort
+.isort.cfg
+# Ruff
+.ruff_cache/
+# Pyright
+.pyright/
+# Pyre
+.pyre/
+# Coverage.py
+.coverage
+# Coverage.py cache
+.coverage.*
+# Coverage.py data files
+*.cover
+# Coverage.py HTML reports
+htmlcov/
+
+# Coverage.py XML reports
+coverage.xml
+# Coverage.py JSON reports
+coverage.json
+# Coverage.py lcov reports
+lcov.info
+# Coverage.py data files
+*.cover
+# Coverage.py HTML reports
+htmlcov/
+
+# Coverage.py XML reports
+coverage.xml
+# Coverage.py JSON reports
+coverage.json
+# Coverage.py lcov reports
+lcov.info
+
+
