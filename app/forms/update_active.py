@@ -11,7 +11,7 @@ class AddActiveForm:
 
     async def load_data(self):
         form = await self.request.form()
-        self.token = form.get("token")
+        self.token = form.get("token", "")
         self.quantity = float(form.get("quantity") or 0)
         self.price = float(form.get("price") or 0)
         self.amount = float(form.get("amount") or 0)
@@ -23,6 +23,4 @@ class AddActiveForm:
             self.errors.append("Quantity must be greater than 0")
         if self.price <= 0:
             self.errors.append("Price must be greater than 0")
-        if self.amount <= 0:
-            self.errors.append("Amount must be greater than 0")
         return not self.errors

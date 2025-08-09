@@ -6,6 +6,7 @@ class RegisterForm:
         self.name: str = ""
         self.email: str = ""
         self.psw: str = ""
+        self.avatar: str = ""
 
     async def load_data(self):
         form = await self.request.form()

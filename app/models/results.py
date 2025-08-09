@@ -1,17 +1,13 @@
-from sqlalchemy import Column, Integer, String, ForeignKey, Boolean
-from sqlalchemy.orm import relationship
+from sqlalchemy import Column, Integer, String, Float
+import datetime
 from app.core.db import Base
 
-class Result(Base):
-    __tablename__ = "results"
+class Actives(Base):
+    __tablename__ = "actives"
 
     id = Column(Integer, primary_key=True, index=True)
-    email = Column(String)
-    psw = Column(String)
-    remember = Column(Boolean)
-    # submit
-
-
-    # Optional: связи
-    # user = relationship("User", backref="results")
-    # active = relationship("Active", backref="results")
+    data = Column(String, default=datetime.datetime.utcnow)
+    token = Column(String, unique=True, nullable=False)
+    quantity = Column(Float, unique=True, nullable=False)
+    price = Column(Float, unique=True, nullable=False)
+    profit = Column(Float, unique=True, nullable=False)

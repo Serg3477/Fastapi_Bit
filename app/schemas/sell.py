@@ -3,25 +3,20 @@ from wsgiref.validate import validator
 from pydantic import BaseModel
 
 class ActiveBase(BaseModel):
-    token: str
     quantity: float
     price: float
-    amount: float
+
 
 class ActiveCreate(ActiveBase):
     id: int
 
-    @validator("quantity", "price", "amount")
-    def positive_value(cls, token, quantity, price, amount):
-        if len(token) < 3:
-            raise ValueError("Token must be at least 3 characters long")
+    @validator("quantity", "price")
+    def positive_value(cls, quantity, price):
         if quantity <= 0:
             raise ValueError("Quantity must be greater than 0")
         if price <= 0:
             raise ValueError("Price must be greater than 0")
-        if amount <= 0:
-            raise ValueError("Amount must be greater than 0")
-        return token, quantity, price, amount
+        return quantity, price
 
     class Config:
         orm_mode = True

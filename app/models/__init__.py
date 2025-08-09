@@ -1,3 +1,3 @@
 from .login import User
-from .actives import Active
+from .actives import Actives
 from .results import Result

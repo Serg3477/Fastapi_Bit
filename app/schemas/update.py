@@ -11,7 +11,7 @@ class ActiveBase(BaseModel):
 class ActiveCreate(ActiveBase):
     id: int
 
-    @validator("quantity", "price", "amount")
+    @validator("token", "quantity", "price", "amount")
     def positive_value(cls, token, quantity, price, amount):
         if len(token) < 3:
             raise ValueError("Token must be at least 3 characters long")
