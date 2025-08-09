@@ -1,0 +1,23 @@
+{% extends 'base1.html' %}
+
+{% block content %}
+{{ super() }}
+{% for cat, msg in get_flashed_messages(True) %}
+<div class="flash {{ cat }}">{{ msg }}</div>
+{% endfor %}
+<div class="container mt-5">
+    <p> Date of transaction - {{ date }}</p>
+    <p> Token  - {{ token }}</p>
+    <p> Quantity  - {{ quant }}</p>
+    <p> Price  - {{ price }}</p>
+    <p> Amount USDT  - {{ amount }}</p>
+    <hr align=left width="300px">
+    <form method="post" class="form-contact">
+        {{ form.hidden_tag() }}
+        <p>{{ form.quantity.label() }} {{ form.quantity() }}
+        <p>{{ form.price.label() }} {{ form.price() }}
+        <p>{{ form.submit() }}
+    </form>
+</div>
+
+{% endblock %}

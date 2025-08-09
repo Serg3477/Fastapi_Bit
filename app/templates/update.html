@@ -1,0 +1,18 @@
+{% extends 'base1.html' %}
+
+{% block content %}
+{{ super() }}
+{% for cat, msg in get_flashed_messages(True) %}
+<div class="flash {{ cat }}">{{ msg }}</div>
+{% endfor %}
+<form action="{{ url_for('update', id_rec=rec.id)}}" method="post" class="form-contact">
+
+    <p><label>Token:   </label><input type="text" name="token" value="{{ rec.token }}"/>
+    <p><label>Quantity:   </label><input type="number" name="quantity" value="{{ rec.quantity }}" step="0.001"/>
+    <p><label>Price:   </label><input type="number" name="price" value="{{ rec.price }}" step="0.0001"/>
+    <p><label>Amount Usdt:   </label><input type="number" name="amount" value="{{ rec.amount }}"/>
+    <p><input type="submit" value="Save"/>
+</form>
+
+<p>Return to <a href="{{ url_for('index') }}">main page</a></p>
+{% endblock %}

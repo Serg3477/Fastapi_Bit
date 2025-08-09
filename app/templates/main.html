@@ -1,0 +1,19 @@
+{% extends 'base1.html' %}
+
+{% block content %}
+{{ super() }}
+<hr>
+{% for cat, msg in get_flashed_messages(True) %}
+<div class="flash {{ cat }}">{{ msg }}</div>
+{% endfor %}
+<h2>Sell operations records list</h2>
+       <hr align=left width="300px">
+<ul class="list-posts">
+    {% for p in records %}
+    <li>
+        <p class="title">  {{ p.id }} - {{ p.token }}  Qnt: {{ p.quantity }} Price: {{ p.price }} Profit - {{ p.profit }}</p><a href="/main/{{ p.id }}/delProf" class="btn btn-success">Del</a>
+    </li>
+    {% endfor %}
+</ul>
+<h4>Total profit - {{ total_profit }}</h4>
+{% endblock %}

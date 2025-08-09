@@ -1,0 +1,64 @@
+{% extends 'base1.html' %}
+
+{% block content %}
+{{ super() }}
+{% for cat, msg in get_flashed_messages(True) %}
+<div class="flash {{ cat }}">{{ msg }}</div>
+{% endfor %}
+<form action="" method="post" class="form-contact">
+    {{ form.hidden_tag() }}
+    <p>{{ form.email.label() }} {{ form.email() }}
+    <p>{{ form.psw.label() }} {{ form.psw() }}
+    <p>{{ form.remember.label() }} {{ form.remember() }}
+    <p>{{ form.submit() }}
+    <hr align=left width="300px">
+    <p><a href="{{ url_for('register') }}">Registration </a>
+</form>
+{% endblock %}
+
+
+
+
+
+
+
+
+{#{% extends 'base.html' %}#}
+{##}
+{#{% block content %}#}
+{#{{ super() }}#}
+{#{% for cat, msg in get_flashed_messages(True) %}#}
+{#<div class="flash {{ cat }}">{{ msg }}</div>#}
+{#{% endfor %}#}
+{#<form action="" method="post" class="form-contact">#}
+{#    {{ form.hidden_tag() }}#}
+{#    <p>{{ form.email.label() }}#}
+{#        {% if form.email.errors %}#}
+{#            {{ form.email(class="form-control is-invalid") }}#}
+{#            <div class="invalid-feedback">#}
+{#                {% for error in form.email.errors %}#}
+{#                    {{ error }}#}
+{#                {% endfor %}#}
+{#            </div>#}
+{#        {% else %}#}
+{#            {{ form.email }}#}
+{#        {% endif %}#}
+{#    <p>{{ form.psw.label() }}#}
+{#        {% if form.psw.errors %}#}
+{#            {{ form.psw(class="form-control is-invalid") }}#}
+{#            <div class="invalid-feedback">#}
+{#                {% for error in form.psw.errors %}#}
+{#                    {{ error }}#}
+{#                {% endfor %}#}
+{#            </div>#}
+{#        {%  else %}#}
+{#            {{ form.psw() }}#}
+{#        {% endif %}#}
+{#    <p>{{ form.remember.label() }}{{ form.remember() }}#}
+{#    <p>{{ form.submit() }}#}
+{#    <hr align=left width="300px">#}
+{#    <p><a href="{{ url_for('register') }}">Registration </a>#}
+{#</form>#}
+{#{% endblock %}#}
+
+{# # action="" для вставки аргумента next и перехода по нему#}
