@@ -3,7 +3,7 @@
 {% block content %}
 {{ super() }}
 <hr>
-{% for cat, msg in get_flashed_messages(True) %}
+{% for cat, msg in messages %}
 <div class="flash {{ cat }}">{{ msg }}</div>
 {% endfor %}
 <h2>Purcashes actives list</h2>
@@ -12,7 +12,7 @@
     {% for p in actives %}
     <li>
         <p class="title">  {{ p.id }}.     -    {{ p.date }}    {{ p.token }}     {{ p.quantity }}   {{ p.price }}    {{ p.amount }}</p>
-        <a href="/main/{{ p.id }}" class="btn btn-success">Sell</a> <a href="/update/{{ p.id }}" class="btn btn-success">Update</a> <a href="/main/{{ p.id }}/del" class="btn btn-warning">Delete</a>
+        <a href="/main/{{ p.id }}" class="btn btn-success">Sell</a> <a href="/update/{{ p.id }}" class="btn btn-success">Update</a> <a href="/delete/{{ p.id }}" class="btn btn-warning">Delete</a>
     </li>
     {% endfor %}
 </ul>

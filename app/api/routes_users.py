@@ -1,17 +1,16 @@
-from datetime import datetime
-
 from fastapi import APIRouter, Request, Depends
 from fastapi.responses import HTMLResponse, RedirectResponse
 from fastapi.templating import Jinja2Templates
+from sqlalchemy.ext.asyncio import AsyncSession
 from starlette.status import HTTP_302_FOUND
 
-from app.forms.login_form import LoginForm
-from app.forms.register_form import RegisterForm
-from app.forms.add_active_form import AddActiveForm
+from app.dependencies import get_db
+from app.forms import LoginForm
+from app.forms import RegisterForm
+from app.forms import AddActiveForm
 from app.middleware.sessions import flash
-from app.services.actives_service import ActivesService
-from app.services.actives_service import actives_service
-from app.middleware.sessions import get_flashed_messages
+from app.services import ActivesService
+from app.middleware import get_flashed_messages
 
 
 router = APIRouter()
@@ -29,8 +28,9 @@ menu = [
 
 
 @router.get("/")
-async def index(request: Request):
-    actives = actives_service.get_all_actives()
+async def index(request: Request, db: AsyncSession = Depends(get_db)):
+    service = ActivesService(db)
+    actives = await service.get_all_actives(request)
     messages = get_flashed_messages(request)
     return templates.TemplateResponse("index.html", {
         "request": request,
@@ -40,15 +40,74 @@ async def index(request: Request):
     })
 
 
-@router.post("/create")
-async def create_post(request: Request, form_data: dict = Depends(...)):
-    result = await ActivesService.create_active(form_data)
-    if not result:
-        flash(request, "Error creating active", category="error")
-    else:
-        flash(request, "Created successfully", category="success")
-    return RedirectResponse("/", status_code=302)
+@router.api_route("/create", methods=["POST", "GET"])
+async def create_post(request: Request, db: AsyncSession = Depends(get_db)):
+    messages = get_flashed_messages(request)
+    form = AddActiveForm(request)
+    await form.load_data()
+    errors = form.errors
+    if request.method == "POST":
+        if form.is_valid(request):
+            service = ActivesService(db)
+            result = await service.create_active(form)
 
+            if not result:
+                flash(request, "Error creating active", category="error")
+            else:
+                flash(request, "Created successfully!", category="success")
+            return templates.TemplateResponse("create.html", {
+                "request": request,
+                "form": form,
+                "errors": errors,
+                "messages": messages,
+            })
+    # GET-запрос — просто отображаем пустую форму
+    return templates.TemplateResponse("create.html", {
+        "request": request,
+        "form": form, # или WTForm, если используешь
+        "errors": errors,
+        "messages": messages
+    })
+
+@router.get("/delete/{active_id}")
+async def delete_active(active_id: int, request: Request, db: AsyncSession = Depends(get_db)):
+    service = ActivesService(db)
+    success = await service.delete_active_by_id(active_id)
+
+    if success:
+        flash(request, "Record deleted successfully!", category="success")
+    else:
+        flash(request, "Record not found or could not be deleted", category="error")
+    return RedirectResponse("/", status_code=303)
+
+
+@router.api_route("/update/{active_id}", methods=["POST", "GET"])
+async def update(active_id: int, request: Request, db: AsyncSession = Depends(get_db)):
+    messages = get_flashed_messages(request)
+    form = AddActiveForm(request)
+    await form.load_data()
+    errors = form.errors
+    if request.method == 'POST':
+
+        service = ActivesService(db)
+        result = await service.update_active_by_id(form, active_id)
+        if not result:
+            flash(request, "Error updatingting active", category="error")
+        else:
+            flash(request, "Updated successfully!", category="success")
+        return templates.TemplateResponse("update.html", {
+            "request": request,
+            "form": form,
+            "errors": errors,
+            "messages": messages,
+        })
+        # GET-запрос — просто отображаем пустую форму
+    return templates.TemplateResponse("update.html", {
+        "request": request,
+        "form": form,  # или WTForm, если используешь
+        "errors": errors,
+        "messages": messages
+    })
 
 
 
@@ -68,7 +127,7 @@ async def register(request: Request):
     if not form.is_valid():
         return templates.TemplateResponse("register.html", {
             "request": request,
-            "error": "Please fill all fields",
+            "errors": "Please fill all fields",
         })
     # логика сохранения пользователя
     return RedirectResponse(url="/login", status_code=HTTP_302_FOUND)
@@ -85,7 +144,7 @@ async def add_active(request: Request):
     if not form.is_valid():
         return templates.TemplateResponse("add_active.html", {
             "request": request,
-            "error": "Please provide a name and price",
+            "errors": "Please provide a name and price",
         })
     # логика добавления актива
     return RedirectResponse(url="/", status_code=HTTP_302_FOUND)

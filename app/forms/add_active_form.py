@@ -1,5 +1,8 @@
 from fastapi import Request
 
+from app.middleware import flash
+
+
 class AddActiveForm:
     def __init__(self, request: Request):
         self.request = request
@@ -16,13 +19,12 @@ class AddActiveForm:
         self.price = float(form.get("price") or 0)
         self.amount = float(form.get("amount") or 0)
 
-    def is_valid(self) -> bool:
+    def is_valid(self, request: Request):
+        self.errors = {}
         if not self.token:
-            self.errors.append("Token is required")
+            self.errors["Token"] = "Token is required"
         if self.quantity <= 0:
-            self.errors.append("Quantity must be greater than 0")
+            self.errors["Quantity"] = "Quantity must be greater than 0"
         if self.price <= 0:
-            self.errors.append("Price must be greater than 0")
-        if self.amount <= 0:
-            self.errors.append("Amount must be greater than 0")
-        return not self.errors
+            self.errors["Price"] = "Price must be greater than 0"
+        return self.errors

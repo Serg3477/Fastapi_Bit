@@ -2,17 +2,26 @@
 
 {% block content %}
     {{ super() }}
-    {% for cat, msg in get_flashed_messages(True) %}
+    {% for cat, msg in messages %}
         <div class="flash {{ cat }}">{{ msg }}</div>
     {% endfor %}
+    {% if form.errors %}
+    <ul class="error-list">
+        <h3>There are such mistakes:</h3>
+        {% for field, msg in form.errors.items() %}
+            <li><strong>{{ field }}:</strong> {{ msg }}</li>
+        {% endfor %}
+    </ul>
+    {% endif %}
+
+
     <hr>
     <h3 class="text-center">Fill all windows to create new record.</h3>
-    <form action="{{ url_for('create') }}" method="post" class="form-contact">
-        {{ form.hidden_tag() }}
-        <p>{{ form.token.label() }} {{ form.token() }}
-        <p>{{ form.quantity.label() }} {{ form.quantity() }}
-        <p>{{ form.price.label() }} {{ form.price() }}
-        <p>{{ form.amount.label() }} {{ form.amount() }}
-        <p>{{ form.submit() }}
+    <form action="/create" method="post" class="form-contact">
+        <p>Token: <input type="text" name="token" value="{{ form.token }}">
+        <p>Quantity: <input type="text" name="quantity" value="{{ form.quantity }}">
+        <p>Price: <input type="text" name="price" value="{{ form.price }}">
+<!--    <p>Amount: <input type="text" name="amount" value="{{ form.amount }}">-->
+        <p><input type="submit" value="Submit">
     </form>
 {% endblock %}

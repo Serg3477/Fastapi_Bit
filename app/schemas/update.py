@@ -2,13 +2,13 @@ from wsgiref.validate import validator
 
 from pydantic import BaseModel
 
-class ActiveBase(BaseModel):
+class ActiveUBase(BaseModel):
     token: str
     quantity: float
     price: float
     amount: float
 
-class ActiveCreate(ActiveBase):
+class ActiveUpdate(ActiveUBase):
     id: int
 
     @validator("token", "quantity", "price", "amount")
@@ -22,12 +22,6 @@ class ActiveCreate(ActiveBase):
         if amount <= 0:
             raise ValueError("Amount must be greater than 0")
         return token, quantity, price, amount
-
-    class Config:
-        orm_mode = True
-
-class ActiveRead(ActiveBase):
-    id: int
 
     class Config:
         orm_mode = True

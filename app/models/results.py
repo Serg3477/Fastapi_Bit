@@ -2,8 +2,8 @@ from sqlalchemy import Column, Integer, String, Float
 import datetime
 from app.core.db import Base
 
-class Actives(Base):
-    __tablename__ = "actives"
+class Results(Base):
+    __tablename__ = "results"
 
     id = Column(Integer, primary_key=True, index=True)
     data = Column(String, default=datetime.datetime.utcnow)

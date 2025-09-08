@@ -1,3 +1,9 @@
-from .login import User
 from .actives import Actives
-from .results import Result
+from .results import Results
+from .user import User
+
+__ALL__ = [
+    "Actives",
+    "Results",
+    "User"
+]

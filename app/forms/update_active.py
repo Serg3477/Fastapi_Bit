@@ -1,6 +1,6 @@
 from fastapi import Request
 
-class AddActiveForm:
+class UpdateActiveForm:
     def __init__(self, request: Request):
         self.request = request
         self.token: str = ""

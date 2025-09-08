@@ -1,6 +1,6 @@
 from fastapi import Request
 
-class AddActiveForm:
+class SellActiveForm:
     def __init__(self, request: Request):
         self.request = request
         self.quantity: float = 0.0

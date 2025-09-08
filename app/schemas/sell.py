@@ -2,12 +2,12 @@ from wsgiref.validate import validator
 
 from pydantic import BaseModel
 
-class ActiveBase(BaseModel):
+class ActiveSBase(BaseModel):
     quantity: float
     price: float
 
 
-class ActiveCreate(ActiveBase):
+class ActiveSell(ActiveSBase):
     id: int
 
     @validator("quantity", "price")
@@ -21,8 +21,3 @@ class ActiveCreate(ActiveBase):
     class Config:
         orm_mode = True
 
-class ActiveRead(ActiveBase):
-    id: int
-
-    class Config:
-        orm_mode = True
