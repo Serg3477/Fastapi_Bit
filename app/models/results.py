@@ -4,10 +4,11 @@ from app.core.db import Base
 
 class Results(Base):
     __tablename__ = "results"
+    __table_args__ = {"sqlite_autoincrement": True}
 
     id = Column(Integer, primary_key=True, index=True)
-    data = Column(String, default=datetime.datetime.utcnow)
-    token = Column(String, unique=True, nullable=False)
-    quantity = Column(Float, unique=True, nullable=False)
-    price = Column(Float, unique=True, nullable=False)
-    profit = Column(Float, unique=True, nullable=False)
+    data = Column(String, default=datetime.date.today())
+    token = Column(String, nullable=False)
+    quantity = Column(Float, nullable=False)
+    price = Column(Float, nullable=False)
+    profit = Column(Float,nullable=False)

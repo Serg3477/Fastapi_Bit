@@ -4,37 +4,20 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="49c0dc9b-95dd-450b-a66c-9c08dca1f8da" name="Changes" comment="Upgrade forms, models and schemas">
-      <change afterPath="$PROJECT_DIR$/app/forms/__init__.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/app/middleware/__init__.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.env" beforeDir="false" afterPath="$PROJECT_DIR$/.env" afterDir="false" />
+    <list default="true" id="49c0dc9b-95dd-450b-a66c-9c08dca1f8da" name="Changes" comment="Upgrade forms, models and schemas. Working at routes.">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/api/__init__.py" beforeDir="false" afterPath="$PROJECT_DIR$/app/api/__init__.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/app/api/routes_users.py" beforeDir="false" afterPath="$PROJECT_DIR$/app/api/routes_users.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/core/__init__.py" beforeDir="false" afterPath="$PROJECT_DIR$/app/core/__init__.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/core/config.py" beforeDir="false" afterPath="$PROJECT_DIR$/app/core/settings.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/core/db.py" beforeDir="false" afterPath="$PROJECT_DIR$/app/core/db.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/app/forms/add_active_form.py" beforeDir="false" afterPath="$PROJECT_DIR$/app/forms/add_active_form.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/forms/sell_active.py" beforeDir="false" afterPath="$PROJECT_DIR$/app/forms/sell_active.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/forms/update_active.py" beforeDir="false" afterPath="$PROJECT_DIR$/app/forms/update_active.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/main.py" beforeDir="false" afterPath="$PROJECT_DIR$/app/main.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/middleware/sessions.py" beforeDir="false" afterPath="$PROJECT_DIR$/app/middleware/sessions.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/models/__init__.py" beforeDir="false" afterPath="$PROJECT_DIR$/app/models/__init__.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/forms/login_form.py" beforeDir="false" afterPath="$PROJECT_DIR$/app/forms/login_form.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/forms/register_form.py" beforeDir="false" afterPath="$PROJECT_DIR$/app/forms/register_form.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/app/models/actives.py" beforeDir="false" afterPath="$PROJECT_DIR$/app/models/actives.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/app/models/results.py" beforeDir="false" afterPath="$PROJECT_DIR$/app/models/results.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/schemas/__init__.py" beforeDir="false" afterPath="$PROJECT_DIR$/app/schemas/__init__.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/schemas/actives.py" beforeDir="false" afterPath="$PROJECT_DIR$/app/schemas/actives.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/schemas/sell.py" beforeDir="false" afterPath="$PROJECT_DIR$/app/schemas/sell.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/schemas/update.py" beforeDir="false" afterPath="$PROJECT_DIR$/app/schemas/update.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/services/__init__.py" beforeDir="false" afterPath="$PROJECT_DIR$/app/services/__init__.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/models/user.py" beforeDir="false" afterPath="$PROJECT_DIR$/app/models/user.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/app/services/actives_service.py" beforeDir="false" afterPath="$PROJECT_DIR$/app/services/actives_service.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/services/auth_service.py" beforeDir="false" afterPath="$PROJECT_DIR$/app/services/auth_service.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/templates/base1.html" beforeDir="false" afterPath="$PROJECT_DIR$/app/templates/base1.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/templates/create.html" beforeDir="false" afterPath="$PROJECT_DIR$/app/templates/create.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/templates/index.html" beforeDir="false" afterPath="$PROJECT_DIR$/app/templates/index.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/templates/delProf.html" beforeDir="false" afterPath="$PROJECT_DIR$/app/templates/delProf.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/templates/main.html" beforeDir="false" afterPath="$PROJECT_DIR$/app/templates/main.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/templates/record.html" beforeDir="false" afterPath="$PROJECT_DIR$/app/templates/record.html" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/app/templates/update.html" beforeDir="false" afterPath="$PROJECT_DIR$/app/templates/update.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/poetry.lock" beforeDir="false" afterPath="$PROJECT_DIR$/poetry.lock" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/pyproject.toml" beforeDir="false" afterPath="$PROJECT_DIR$/pyproject.toml" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -51,12 +34,18 @@
   <component name="Git.Settings">
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
   </component>
-  <component name="GithubPullRequestsUISettings"><![CDATA[{
-  "selectedUrlAndAccountId": {
-    "url": "git@github.com:Serg3477/Fastapi_Bit",
-    "accountId": "e2bec620-9003-4edb-9ad4-b609b8cceac6"
+  <component name="GitHubPullRequestSearchHistory">{
+  &quot;lastFilter&quot;: {
+    &quot;state&quot;: &quot;OPEN&quot;,
+    &quot;assignee&quot;: &quot;Serg3477&quot;
   }
-}]]></component>
+}</component>
+  <component name="GithubPullRequestsUISettings">{
+  &quot;selectedUrlAndAccountId&quot;: {
+    &quot;url&quot;: &quot;git@github.com:Serg3477/Fastapi_Bit&quot;,
+    &quot;accountId&quot;: &quot;e2bec620-9003-4edb-9ad4-b609b8cceac6&quot;
+  }
+}</component>
   <component name="ProjectColorInfo">{
   &quot;associatedIndex&quot;: 1
 }</component>
@@ -94,7 +83,7 @@
   <component name="SharedIndexes">
     <attachedChunks>
       <set>
-        <option value="bundled-python-sdk-03e874896e21-d902c0275401-com.jetbrains.pycharm.community.sharedIndexes.bundled-PC-252.23892.439" />
+        <option value="bundled-python-sdk-8753aad8314d-d902c0275401-com.jetbrains.pycharm.community.sharedIndexes.bundled-PC-252.25557.178" />
       </set>
     </attachedChunks>
   </component>
@@ -133,7 +122,15 @@
       <option name="project" value="LOCAL" />
       <updated>1754758897036</updated>
     </task>
-    <option name="localTasksCounter" value="4" />
+    <task id="LOCAL-00004" summary="Upgrade forms, models and schemas. Working at routes.">
+      <option name="closed" value="true" />
+      <created>1757311933538</created>
+      <option name="number" value="00004" />
+      <option name="presentableId" value="LOCAL-00004" />
+      <option name="project" value="LOCAL" />
+      <updated>1757311933538</updated>
+    </task>
+    <option name="localTasksCounter" value="5" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -143,6 +140,7 @@
     <MESSAGE value="First commit.&#10;Beginning to make a project in FastAPI." />
     <MESSAGE value="First commit.&#10;Beginning to make a project in FastAPI. Add .gitignore" />
     <MESSAGE value="Upgrade forms, models and schemas" />
-    <option name="LAST_COMMIT_MESSAGE" value="Upgrade forms, models and schemas" />
+    <MESSAGE value="Upgrade forms, models and schemas. Working at routes." />
+    <option name="LAST_COMMIT_MESSAGE" value="Upgrade forms, models and schemas. Working at routes." />
   </component>
 </project>

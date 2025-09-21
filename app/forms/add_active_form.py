@@ -22,9 +22,9 @@ class AddActiveForm:
     def is_valid(self, request: Request):
         self.errors = {}
         if not self.token:
-            self.errors["Token"] = "Token is required"
+            self.errors["token"] = "Token is required"
         if self.quantity <= 0:
-            self.errors["Quantity"] = "Quantity must be greater than 0"
+            self.errors["quantity"] = "Quantity must be greater than 0"
         if self.price <= 0:
-            self.errors["Price"] = "Price must be greater than 0"
-        return self.errors
+            self.errors["price"] = "Price must be greater than 0"
+        return len (self.errors) == 0

@@ -3,7 +3,7 @@
 {% block content %}
 {{ super() }}
 <hr>
-{% for cat, msg in get_flashed_messages(True) %}
+{% for cat, msg in messages %}
 <div class="flash {{ cat }}">{{ msg }}</div>
 {% endfor %}
 <h2>Sell operations records list</h2>
@@ -11,7 +11,7 @@
 <ul class="list-posts">
     {% for p in records %}
     <li>
-        <p class="title">  {{ p.id }} - {{ p.token }}  Qnt: {{ p.quantity }} Price: {{ p.price }} Profit - {{ p.profit }}</p><a href="/main/{{ p.id }}/delProf" class="btn btn-success">Del</a>
+        <p class="title">  {{ p.id }} - {{ p.token }}  Qnt: {{ p.quantity }} Price: {{ p.price }} Profit - {{ p.profit }}</p><a href="/delRec/{{ p.id }}" class="btn btn-success">Del</a>
     </li>
     {% endfor %}
 </ul>

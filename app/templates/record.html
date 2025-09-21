@@ -2,22 +2,39 @@
 
 {% block content %}
 {{ super() }}
-{% for cat, msg in get_flashed_messages(True) %}
+
+{% if errors %}
+<ul class="error-list">
+    <h3>Ошибки:</h3>
+    {% for field, msg in errors.items() %}
+        <li><strong>{{ field }}:</strong> {{ msg }}</li>
+    {% endfor %}
+</ul>
+{% endif %}
+
+{% for cat, msg in messages %}
 <div class="flash {{ cat }}">{{ msg }}</div>
 {% endfor %}
-<div class="container mt-5">
-    <p> Date of transaction - {{ date }}</p>
-    <p> Token  - {{ token }}</p>
-    <p> Quantity  - {{ quant }}</p>
-    <p> Price  - {{ price }}</p>
-    <p> Amount USDT  - {{ amount }}</p>
+
+<hr align="left" width="300px">
+<div class="form-contact">
+    <p> Date of transaction - {{ active.data }}</p>
+    <p> Token  - {{ active.token }}</p>
+    <p> Quantity  - {{ active.quantity }}</p>
+    <p> Price  - {{ active.price }}</p>
+    <p> Amount USDT  - {{ active.amount }}</p>
     <hr align=left width="300px">
-    <form method="post" class="form-contact">
-        {{ form.hidden_tag() }}
-        <p>{{ form.quantity.label() }} {{ form.quantity() }}
-        <p>{{ form.price.label() }} {{ form.price() }}
-        <p>{{ form.submit() }}
+    <h3 class="text-center">Update record</h3>
+    <form action="/main/{{ active.id }}" method="post" class="form-contact">
+        <p><label>Quantity:</label>
+            <input type="number" name="quantity" value="{{ active.quantity }}" step="0.001">
+        </p>
+        <p><label>Price:</label>
+            <input type="number" name="price" value="{{ active.price }}" step="0.0001">
+        </p>
+        <p><input type="submit" value="SELL"></p>
     </form>
 </div>
 
 {% endblock %}
+

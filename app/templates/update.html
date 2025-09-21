@@ -1,27 +1,35 @@
 {% extends 'base1.html' %}
 
 {% block content %}
-    {{ super() }}
-    {% for cat, msg in messages %}
-    <div class="flash {{ cat }}">{{ msg }}</div>
+{{ super() }}
+
+{% for cat, msg in messages %}
+<div class="flash {{ cat }}">{{ msg }}</div>
+{% endfor %}
+
+{% if errors %}
+<ul class="error-list">
+    <h3>There are such mistakes:</h3>
+    {% for field, msg in errors.items() %}
+        <li><strong>{{ field }}:</strong> {{ msg }}</li>
     {% endfor %}
-    {% if form.errors %}
-        <ul class="error-list">
-            <h3>There are such mistakes:</h3>
-            {% for field, msg in form.errors.items() %}
-                <li><strong>{{ field }}:</strong> {{ msg }}</li>
-            {% endfor %}
-        </ul>
-    {% endif %}
+</ul>
+{% endif %}
 
-    <hr>
-        <h3 class="text-center">Fill all windows to create new record.</h3>
-        <form action="/create" method="post" class="form-contact">
-        <p><label>Token:   </label><input type="text" name="token" value="{{ form.token }}"/>
-        <p><label>Quantity:   </label><input type="number" name="quantity" value="{{ form.quantity }}" step="0.001"/>
-        <p><label>Price:   </label><input type="number" name="price" value="{{ form.price }}" step="0.0001"/>
-        <p><input type="submit" value="Save"/>
-    </form>
+<hr>
+<h3 class="text-center">Update record</h3>
+<form action="/update/{{ active.id }}" method="post" class="form-contact">
+    <p><label>Token:</label>
+       <input type="text" name="token" value="{{ active.token }}">
+    </p>
+    <p><label>Quantity:</label>
+       <input type="number" name="quantity" value="{{ active.quantity }}" step="0.001">
+    </p>
+    <p><label>Price:</label>
+       <input type="number" name="price" value="{{ active.price }}" step="0.0001">
+    </p>
+    <p><input type="submit" value="Save"></p>
+</form>
 
-    <p>Return to <a href="/">main page</a></p>
+<p>Return to <a href="/">main page</a></p>
 {% endblock %}
