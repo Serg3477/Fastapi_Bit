@@ -1,64 +1,28 @@
 {% extends 'base1.html' %}
 
 {% block content %}
-{{ super() }}
-{% for cat, msg in get_flashed_messages(True) %}
-<div class="flash {{ cat }}">{{ msg }}</div>
-{% endfor %}
-<form action="" method="post" class="form-contact">
-    {{ form.hidden_tag() }}
-    <p>{{ form.email.label() }} {{ form.email() }}
-    <p>{{ form.psw.label() }} {{ form.psw() }}
-    <p>{{ form.remember.label() }} {{ form.remember() }}
-    <p>{{ form.submit() }}
+    {{ super() }}
+    {% for cat, msg in messages %}
+        <div class="flash {{ cat }}">{{ msg }}</div>
+    {% endfor %}
+    {% if form.errors %}
+    <ul class="error-list">
+        <h3>There are such mistakes:</h3>
+        {% for field, msg in form.errors.items() %}
+            <li><strong>{{ field }}:</strong> {{ msg }}</li>
+        {% endfor %}
+    </ul>
+    {% endif %}
+
+<hr>
+<h3 class="text-center">Fill all windows to logining.</h3>
+<form action="/login" method="post" enctype="multipart/form-data" class="form-contact">
+    <p>Name: <input type="text" name="name">
+    <p>Password: <input type="text" name="psw">
+    <p>Remember me: <input type="checkbox" name="remember">
+    <p><input type="submit" value="Submit">
     <hr align=left width="300px">
     <p><a href="{{ url_for('register') }}">Registration </a>
 </form>
 {% endblock %}
 
-
-
-
-
-
-
-
-{#{% extends 'base.html' %}#}
-{##}
-{#{% block content %}#}
-{#{{ super() }}#}
-{#{% for cat, msg in get_flashed_messages(True) %}#}
-{#<div class="flash {{ cat }}">{{ msg }}</div>#}
-{#{% endfor %}#}
-{#<form action="" method="post" class="form-contact">#}
-{#    {{ form.hidden_tag() }}#}
-{#    <p>{{ form.email.label() }}#}
-{#        {% if form.email.errors %}#}
-{#            {{ form.email(class="form-control is-invalid") }}#}
-{#            <div class="invalid-feedback">#}
-{#                {% for error in form.email.errors %}#}
-{#                    {{ error }}#}
-{#                {% endfor %}#}
-{#            </div>#}
-{#        {% else %}#}
-{#            {{ form.email }}#}
-{#        {% endif %}#}
-{#    <p>{{ form.psw.label() }}#}
-{#        {% if form.psw.errors %}#}
-{#            {{ form.psw(class="form-control is-invalid") }}#}
-{#            <div class="invalid-feedback">#}
-{#                {% for error in form.psw.errors %}#}
-{#                    {{ error }}#}
-{#                {% endfor %}#}
-{#            </div>#}
-{#        {%  else %}#}
-{#            {{ form.psw() }}#}
-{#        {% endif %}#}
-{#    <p>{{ form.remember.label() }}{{ form.remember() }}#}
-{#    <p>{{ form.submit() }}#}
-{#    <hr align=left width="300px">#}
-{#    <p><a href="{{ url_for('register') }}">Registration </a>#}
-{#</form>#}
-{#{% endblock %}#}
-
-{# # action="" для вставки аргумента next и перехода по нему#}

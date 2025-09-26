@@ -4,20 +4,20 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="49c0dc9b-95dd-450b-a66c-9c08dca1f8da" name="Changes" comment="Upgrade forms, models and schemas. Working at routes.">
+    <list default="true" id="49c0dc9b-95dd-450b-a66c-9c08dca1f8da" name="Changes" comment="Working with user register and login">
+      <change afterPath="$PROJECT_DIR$/app/api/routes_active.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/app/templates/modal.html" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/api/__init__.py" beforeDir="false" afterPath="$PROJECT_DIR$/app/api/__init__.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/api/routes_register.py" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/app/api/routes_users.py" beforeDir="false" afterPath="$PROJECT_DIR$/app/api/routes_users.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/forms/add_active_form.py" beforeDir="false" afterPath="$PROJECT_DIR$/app/forms/add_active_form.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/forms/login_form.py" beforeDir="false" afterPath="$PROJECT_DIR$/app/forms/login_form.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/app/forms/register_form.py" beforeDir="false" afterPath="$PROJECT_DIR$/app/forms/register_form.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/models/actives.py" beforeDir="false" afterPath="$PROJECT_DIR$/app/models/actives.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/models/results.py" beforeDir="false" afterPath="$PROJECT_DIR$/app/models/results.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/models/user.py" beforeDir="false" afterPath="$PROJECT_DIR$/app/models/user.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/services/actives_service.py" beforeDir="false" afterPath="$PROJECT_DIR$/app/services/actives_service.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/templates/delProf.html" beforeDir="false" afterPath="$PROJECT_DIR$/app/templates/delProf.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/templates/main.html" beforeDir="false" afterPath="$PROJECT_DIR$/app/templates/main.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/templates/record.html" beforeDir="false" afterPath="$PROJECT_DIR$/app/templates/record.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/templates/update.html" beforeDir="false" afterPath="$PROJECT_DIR$/app/templates/update.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/main.py" beforeDir="false" afterPath="$PROJECT_DIR$/app/main.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/middleware/sessions.py" beforeDir="false" afterPath="$PROJECT_DIR$/app/middleware/sessions.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/templates/base1.html" beforeDir="false" afterPath="$PROJECT_DIR$/app/templates/base1.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/templates/login.html" beforeDir="false" afterPath="$PROJECT_DIR$/app/templates/login.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/templates/profile.html" beforeDir="false" afterPath="$PROJECT_DIR$/app/templates/profile.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/templates/register.html" beforeDir="false" afterPath="$PROJECT_DIR$/app/templates/register.html" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -130,7 +130,15 @@
       <option name="project" value="LOCAL" />
       <updated>1757311933538</updated>
     </task>
-    <option name="localTasksCounter" value="5" />
+    <task id="LOCAL-00005" summary="Working with user register and login">
+      <option name="closed" value="true" />
+      <created>1758476503789</created>
+      <option name="number" value="00005" />
+      <option name="presentableId" value="LOCAL-00005" />
+      <option name="project" value="LOCAL" />
+      <updated>1758476503789</updated>
+    </task>
+    <option name="localTasksCounter" value="6" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -141,6 +149,7 @@
     <MESSAGE value="First commit.&#10;Beginning to make a project in FastAPI. Add .gitignore" />
     <MESSAGE value="Upgrade forms, models and schemas" />
     <MESSAGE value="Upgrade forms, models and schemas. Working at routes." />
-    <option name="LAST_COMMIT_MESSAGE" value="Upgrade forms, models and schemas. Working at routes." />
+    <MESSAGE value="Working with user register and login" />
+    <option name="LAST_COMMIT_MESSAGE" value="Working with user register and login" />
   </component>
 </project>

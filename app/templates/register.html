@@ -1,15 +1,26 @@
 {% extends 'base1.html' %}
 
 {% block content %}
-{{ super() }}
-{% for cat, msg in get_flashed_messages(True) %}
-<div class="flash {{ cat }}">{{ msg }}</div>
-{% endfor %}
-<form action="/register" method="post" class="form-contact">
-    {{ form.hidden_tag() }}
-    <p>{{ form.name.label() }} {{ form.name() }}
-    <p>{{ form.email.label() }} {{ form.email() }}
-    <p>{{ form.psw.label() }} {{ form.psw() }}
-    <p>{{ form.submit() }}
+    {{ super() }}
+    {% for cat, msg in messages %}
+        <div class="flash {{ cat }}">{{ msg }}</div>
+    {% endfor %}
+    {% if form.errors %}
+    <ul class="error-list">
+        <h3>There are such mistakes:</h3>
+        {% for field, msg in form.errors.items() %}
+            <li><strong>{{ field }}:</strong> {{ msg }}</li>
+        {% endfor %}
+    </ul>
+    {% endif %}
+
+<hr>
+<h3 class="text-center">Fill all windows to register new user.</h3>
+<form action="/register" method="post" enctype="multipart/form-data" class="form-contact">
+    <p>Name: <input type="text" name="name">
+    <p>Email: <input type="text" name="email">
+    <p>Password: <input type="text" name="psw">
+    <p>Avatar (path): <input type="file" name="avatar" accept=".jpg,.jpeg,.png">
+    <p><input type="submit" value="Register">
 </form>
 {% endblock %}

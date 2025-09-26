@@ -1,4 +1,4 @@
-from typing import re
+import re
 
 from fastapi import Request
 
@@ -15,9 +15,12 @@ class RegisterForm:
         self.name = form.get("name")
         self.email = form.get("email")
         self.psw = form.get("psw")
+        self.avatar = form.get("avatar")
 
         self.errors = {}
 
+
+    def is_valid(self) -> bool:
         # Имя: не пустое, минимум 3 символа
         if not self.name or len(self.name) < 3:
             self.errors["name"] = "Name must be at least 3 characters."

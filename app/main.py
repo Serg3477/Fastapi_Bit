@@ -3,10 +3,12 @@ from fastapi.staticfiles import StaticFiles
 from fastapi.templating import Jinja2Templates
 from contextlib import asynccontextmanager
 from starlette.middleware.sessions import SessionMiddleware
+from fastapi.staticfiles import StaticFiles
 
 from app.core import settings
 from app.core import init_db
-from app.api import router as users_router
+from app.api import active_router
+from app.api import users_router
 # from app.api.routes_admin import router as admin_router
 from app.middleware import get_flashed_messages
 
@@ -24,11 +26,13 @@ app = FastAPI(
 )
 
 # Подключаем роутеры
+app.include_router(active_router)
 app.include_router(users_router)
-# app.include_router(admin_router, prefix="/admin", tags=["Admin"])
 
 # Подключаем статику и шаблоны
 app.mount("/static", StaticFiles(directory="app/static"), name="static")
+app.mount("/static/Images", StaticFiles(directory="app/static/Images"), name="images")
+app.mount("/Avatars", StaticFiles(directory="Avatars"), name="avatars")
 templates = Jinja2Templates(directory="app/templates")
 
 # Подключаем middleware для сессий
@@ -43,6 +47,3 @@ def template_context_processor(request: Request):
 # Добавляет template_context_processor как глобальную переменную в Jinja2.
 templates.env.globals["template_context_processor"] = template_context_processor
 
-# @app.get("/test-static")
-# def test_static(request: Request):
-#     return {"url": request.url_for("static", filename="css/style.css")}
