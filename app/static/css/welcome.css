@@ -1,0 +1,84 @@
+body, html {
+  margin: 0;
+  padding: 0;
+  height: 100%;
+  font-family: 'Inter', sans-serif;
+}
+
+.welcome-overlay {
+  background: url("/static/Images/Background/circuitry.png") no-repeat center center/cover;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  opacity: 0;
+  animation: fadeIn 1.2s ease forwards;
+}
+
+@keyframes fadeIn {
+  to { opacity: 1; }
+}
+
+.welcome-box {
+  background: rgba(0,0,0,0.6);
+  padding: 40px 60px;
+  border-radius: 12px;
+  text-align: center;
+  color: #fff;
+  transform: translateY(20px);
+  opacity: 0;
+  animation: slideUp 1s ease forwards 0.5s;
+}
+
+@keyframes slideUp {
+  to {
+    transform: translateY(0);
+    opacity: 1;
+  }
+}
+
+.welcome-title {
+  font-size: 2rem;
+  margin-bottom: 10px;
+}
+
+.welcome-subtitle {
+  font-size: 1.2rem;
+  margin-bottom: 20px;
+  color: #ddd;
+}
+
+.welcome-actions {
+  display: flex;
+  gap: 20px;
+  justify-content: center;
+}
+
+.btn-login, .btn-register {
+  padding: 12px 24px;
+  font-size: 1rem;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+  transition: transform 0.2s ease, background 0.3s ease;
+}
+
+.btn-login {
+  background: #3498db;
+  color: #fff;
+}
+
+.btn-login:hover {
+  background: #2980b9;
+  transform: scale(1.05);
+}
+
+.btn-register {
+  background: #2ecc71;
+  color: #fff;
+}
+
+.btn-register:hover {
+  background: #27ae60;
+  transform: scale(1.05);
+}

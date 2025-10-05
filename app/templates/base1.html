@@ -2,43 +2,73 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
+    <link rel="stylesheet" href="/static/css/style.css"/>
+    <link rel="stylesheet" href="/static/css/modal.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/normalize/8.0.1/normalize.min.css">
-    <link rel="stylesheet" href="/static/css/style.css" />
-<!--    <link rel="stylesheet" href="{{ url_for('static', path='css/style.css') }}">-->
-
+    <link href="https://fonts.googleapis.com/css2?family=Inter&display=swap" rel="stylesheet">
     {% block title -%}
     {% if title %}
-        <title>AltBase - {{ title }}</title>
+    <title>AltBase - {{ title }}</title>
     {% else %}
-        <title>AltBase</title>
+    <title>AltBase</title>
     {% endif %}
     {% endblock %}
 </head>
 <body>
 {% block content -%}
-<div style="width: 1440px; height: 200px; background-color: white; position: relative;">
-    <div style="width: 1415px; height: 67px; left: 12px; top: 14px; position: absolute;">
-        <div style="width: 1415px; height: 67px; padding-top: 11px; padding-bottom: 18px; padding-left: 33px; padding-right: 1053px; background-color: rgba(133.39, 253.77, 58.56, 1); display: flex; flex-direction: row; align-items: center; justify-content: flex-start;">
-            <img style="width: 127px; height: 30px; border-radius: 8px;" src="static/Images/bitcoin-logo.svg" />
-            <div style="width: 18.50px;"></div>
-            <div style="width: 18.50px;"></div>
-        </div>
-    </div>
+<div class="background-overlay">
+
 </div>
-<div>
-    <p style="width: 114px; height: 30px; left: 220px; top: 30px; position: absolute; font-size: 24px; line-height: 100%; color: black;"><a href="/">Main page</a></p>
-    <p style="width: 230px; height: 30px; left: 400px; top: 30px; position: absolute; font-size: 24px; line-height: 100%; color: black;"><a href="/create">Create new record</a></p>
-    <p style="width: 227px; height: 30px; left: 644px; top: 30px; position: absolute; font-size: 24px; line-height: 100%; color: black;"><a href="/main">Show profits</a></p>
-    <p style="width: 134px; height: 30px; left: 810px; top: 30px; position: absolute; font-size: 24px; line-height: 100%; color: black;"><a href="/login">Authorisation</a></p>
-    <p style="width: 73px; height: 30px; left: 1000px; top: 30px; position: absolute; font-size: 24px; line-height: 100%; color: black;"><a href="/profile">Profile</a></p>
-    <p style="width: 136px; height: 30px; left: 1119px; top: 30px; position: absolute; font-size: 24px; line-height: 100%; color: black;"><a href="/admin/login">Admin panel</a></p>
+<div class="main-wrapper">
+    <nav class="navbar">
+        <!-- Логотип слева -->
+        <a href="#" class="logo">
+            <img src="/static/Images/medal_9740562.png" alt="AltBase Logo" class="logo-img" loading="lazy">
+            <span class="logo-text">AltBase</span>
+        </a>
+        <!-- Меню справа -->
+        <ul class="nav-menu">
+            <li><a href="/" class="hover:text-blue-600">Home</a></li>
+            <li><a href="#" class="hover:text-blue-600" onclick="openCreateModal()">Create</a>
+            <li><a href="/main" class="hover:text-blue-600">Show profits</a></li>
+            <li><a href="#" class="hover:text-blue-600" onclick="openLoginModal()">Login</a></li>
+            <li><a href="#" class="hover:text-blue-600" onclick="openProfileModal()">Profile</a></li>
+            <li><a href="#" class="hover:text-blue-600" onclick="openRegisterModal()">Register</a></li>
+        </ul>
+    </nav>
 </div>
 
-{% if title -%}
-<p style="width: 379px; height: 35px; left: 624px; top: 92px; position: absolute; font-size: 24px; line-height: 100%; text-align: center; color: black;">{{ title }}</p>
-{% else %}
-<p style="width: 179px; height: 35px; left: 654px; top: 92px; position: absolute; font-size: 24px; line-height: 100%; text-align: center; color: black;">AltBase</p>
+{% if show_modal %}
+<script>
+  document.addEventListener("DOMContentLoaded", () => {
+    openLoginModal();
+  });
+</script>
 {% endif %}
+
+<div id="loginModalContainer"></div>
+<script src="/js/login.js"></script>
+
+<div id="registerModalContainer"></div>
+<script src="/js/register.js"></script>
+
+<div id="createModalContainer"></div>
+<script src="/js/create.js"></script>
+
+<script>
+  window.currentUser = {
+    name: "{% if user is defined and user %}{{ user.name }}{% else %}{% endif %}",
+    email: "{% if user is defined and user %}{{ user.email }}{% else %}{% endif %}",
+    avatar: "{% if user is defined and user %}{{ user.avatar }}{% else %}/static/Images/default-avatar.png{% endif %}"
+  };
+</script>
+
+
+
+<div id="profileModalContainer"></div>
+<script src="/js/profile.js"></script>
+
+<script src="/js/close_x.js"></script>
 
 {% endblock content -%}
 </body>

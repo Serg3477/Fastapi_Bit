@@ -33,6 +33,7 @@ app.include_router(users_router)
 app.mount("/static", StaticFiles(directory="app/static"), name="static")
 app.mount("/static/Images", StaticFiles(directory="app/static/Images"), name="images")
 app.mount("/Avatars", StaticFiles(directory="Avatars"), name="avatars")
+app.mount("/js", StaticFiles(directory="app/js"), name="js")
 templates = Jinja2Templates(directory="app/templates")
 
 # Подключаем middleware для сессий
@@ -46,4 +47,7 @@ def template_context_processor(request: Request):
 
 # Добавляет template_context_processor как глобальную переменную в Jinja2.
 templates.env.globals["template_context_processor"] = template_context_processor
+
+
+
 

@@ -2,19 +2,48 @@
 
 {% block content %}
 {{ super() }}
+
 <hr>
 {% for cat, msg in messages %}
 <div class="flash {{ cat }}">{{ msg }}</div>
 {% endfor %}
-<h2>Purcashes actives list</h2>
-<div class="bg-white border border-indigo-900" style="width: 741px; height: 734px;">
-<ul class="list-posts">
-    {% for p in actives %}
-    <li>
-        <p class="title">  {{ p.id }}.     -    {{ p.date }}    {{ p.token }}     {{ p.quantity }}   {{ p.price }}    {{ p.amount }}</p>
-        <a href="/main/{{ p.id }}" class="btn btn-success">Sell</a> <a href="/update/{{ p.id }}" class="btn btn-success">Update</a> <a href="/delete/{{ p.id }}" class="btn btn-warning">Delete</a>
+
+<h2 class="caption">Purcashe actives list</h2>
+<div class="actives-container"> {% for p in actives %}
+    <li class="list-posts"> <div class="title">
+        <table class="index"> <tr class="caption">
+            <th class="text-center">ID</th>
+            <th class="text-center">Date</th>
+            <th class="text-center">Token</th>
+            <th class="text-center">Quantity</th>
+            <th class="text-center">Price</th>
+            <th class="text-center">Amount</th>
+        </tr> <tr class="value"> <th class="text-center">{{ p.id }}</th>
+            <th class="text-center">{{ p.data }}</th>
+            <th class="text-center">{{ p.token }}</th>
+            <th class="text-center">{{ p.quantity | float | round(3) }}</th>
+            <th class="text-center">{{ p.price | float | round(3) }}</th>
+            <th class="text-center">{{ p.amount | float | round(3) }}</th>
+        </tr> </table> </div>
+        <a href="#" class="btn-success" onclick="openSellModal(this)"
+           data-id="{{ p.id }}"
+           data-token="{{ p.token }}"
+           data-quantity="{{ p.quantity }}"
+           data-price="{{ p.price }}">Sell</a>
+        <a href="#" class="btn-success" onclick="openUpdateModal(this)"
+           data-id="{{ p.id }}"
+           data-token="{{ p.token }}"
+           data-quantity="{{ p.quantity }}"
+           data-price="{{ p.price }}">Update</a>
+        <a href="/delete/{{ p.id }}" class="btn-warning">Delete</a>
     </li>
     {% endfor %}
-</ul>
 </div>
+
+<div id="sellModalContainer"></div>
+<script src="/js/sell.js"></script>
+
+<div id="updateModalContainer"></div>
+<script src="/js/update.js"></script>
+
 {% endblock %}

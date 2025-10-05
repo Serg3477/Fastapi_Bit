@@ -79,9 +79,9 @@ async def register(request: Request, db: AsyncSession = Depends(get_db)):
 @users_router.api_route("/login", methods=["GET", "POST"])
 async def login(request: Request, db: AsyncSession = Depends(get_db)):
     # Если уже авторизован — перенаправляем
-    current_user = get_session_user(request)
-    if current_user:
-        return RedirectResponse(url="/profile", status_code=303)
+    # current_user = get_session_user(request)
+    # if current_user:
+    #     return RedirectResponse(url="/profile", status_code=303)
 
     form = LoginForm(request)
     await form.load_data()
@@ -104,16 +104,17 @@ async def login(request: Request, db: AsyncSession = Depends(get_db)):
                 flash(request, "Login successful!", category="success")
 
                 # Перенаправление на next или профиль
-                next_url = request.query_params.get("next") or "/profile"
-                return RedirectResponse(url=next_url, status_code=303)
+                # next_url = request.query_params.get("next") or "/profile"
+                return RedirectResponse(url="/", status_code=303)
             else:
                 flash(request, "Incorrect username/email or password.", category="error")
 
-    return templates.TemplateResponse("login.html", {
+    return templates.TemplateResponse("index.html", {
         "request": request,
         "form": form,
         "messages": messages,
-        "title": "Login page"
+        # "actives": await service.get_all_actives(request),
+        "show_modal": True,
     })
 
 
@@ -141,8 +142,8 @@ async def profile(request: Request, db=Depends(get_db)):
 @users_router.get("/logout")
 async def logout(request: Request):
     clear_session_user(request)
-    flash(request, "You have been logged out.", category="info")
-    return RedirectResponse(url="/login", status_code=303)
+    flash(request, "You have been logged out.", category="success")
+    return RedirectResponse(url="/", status_code=303)
 
 
 @users_router.get("/delete_user")
@@ -159,4 +160,4 @@ async def delete_user(request: Request, db=Depends(get_db)):
     clear_session_user(request)
     flash(request, "Your account has been deleted.", category="info")
 
-    return RedirectResponse(url="/login", status_code=303)
+    return RedirectResponse(url="/", status_code=303)

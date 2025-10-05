@@ -3,12 +3,13 @@ from fastapi.responses import RedirectResponse
 from fastapi.templating import Jinja2Templates
 from sqlalchemy import select, func
 from sqlalchemy.ext.asyncio import AsyncSession
+from starlette.responses import HTMLResponse
 
 from app.dependencies import get_db
 from app.forms import AddActiveForm
 from app.forms import SellActiveForm
-from app.middleware.sessions import get_session_user, flash, get_flashed_messages
-from app.models import Actives
+from app.middleware.sessions import get_session_user, flash, get_flashed_messages, get_current_user
+from app.models import Actives, User
 from app.models import Results
 from app.services import ActivesService
 
@@ -29,26 +30,38 @@ menu = [
 
 
 @active_router.get("/")
-async def index(request: Request, db: AsyncSession = Depends(get_db)):
+async def index(request: Request, db: AsyncSession = Depends(get_db), current_user: User = Depends(get_current_user)):
     user_id = get_session_user(request)
-    if not user_id:
-        return RedirectResponse(url="/login", status_code=303)
+
+    # Если не залогинен → титульная страница
+    if not current_user:
+        return templates.TemplateResponse("welcome.html", {
+            "request": request,
+            "title": "Welcome"
+        })
+
+    # Если залогинен → index.html
+    result = await db.execute(select(User).where(User.id == user_id))
+    current_user = result.scalar_one_or_none()
 
     service = ActivesService(db)
     actives = await service.get_all_actives(request)
     await service.order_by_id(actives)
     messages = get_flashed_messages(request)
+
     return templates.TemplateResponse("index.html", {
         "request": request,
         "actives": actives,
         "messages": messages,
-        "title": "Main page of the site"
+        "user": current_user or None,
+        "title": "Main page of the site",
     })
 
 
-@active_router.api_route("/create", methods=["POST", "GET"])
+@active_router.api_route("/create", methods=["POST", "GET"], response_class=HTMLResponse)
 async def create_post(request: Request, db: AsyncSession = Depends(get_db)):
     messages = get_flashed_messages(request)
+    actives = await ActivesService(db).get_all_actives(request)
     form = AddActiveForm(request)
     await form.load_data()
     errors = form.errors
@@ -61,18 +74,23 @@ async def create_post(request: Request, db: AsyncSession = Depends(get_db)):
                 flash(request, "Error creating active", category="error")
             else:
                 flash(request, "Created successfully!", category="success")
-            return templates.TemplateResponse("create.html", {
+
+            actives = await ActivesService(db).get_all_actives(request)
+            return templates.TemplateResponse("index.html", {
                 "request": request,
                 "form": form,
                 "errors": errors,
                 "messages": messages,
+                "actives": actives,
+                "show_modal": False
             })
-    # GET-запрос — просто отображаем пустую форму
-    return templates.TemplateResponse("create.html", {
+        messages = get_flashed_messages(request)
+        # GET-запрос — просто отображаем пустую форму
+    return templates.TemplateResponse("index.html", {
         "request": request,
         "form": form,
         "errors": errors,
-        "messages": messages
+        "messages": messages,
     })
 
 @active_router.get("/delete/{active_id}")
@@ -98,13 +116,14 @@ async def delete_result(result_id: int, request: Request, db: AsyncSession = Dep
         flash(request, "Record deleted successfully!", category="success")
     else:
         flash(request, "Record not found or could not be deleted", category="error")
-    return RedirectResponse("/", status_code=303)
+    return RedirectResponse("/main", status_code=303)
 
 
-@active_router.api_route("/update/{active_id}", methods=["GET", "POST"])
+
+@active_router.api_route("/update/{active_id}", methods=["GET", "POST"], response_class=HTMLResponse)
 async def update(active_id: int, request: Request, db: AsyncSession = Depends(get_db)):
     messages = get_flashed_messages(request)
-
+    service = ActivesService(db)
     # Загружаем запись один раз
     result = await db.execute(select(Actives).where(Actives.id == active_id))
     active = result.scalars().first()
@@ -118,29 +137,23 @@ async def update(active_id: int, request: Request, db: AsyncSession = Depends(ge
     errors = form.errors
 
     if request.method == "POST" and not errors:
-        service = ActivesService(db)
+
         updated = await service.update_active(active_id, form)
         if updated:
             flash(request, "Updated successfully!", category="success")
         else:
             flash(request, "Error updating active", category="error")
 
-    # Передаём в шаблон словарь, чтобы избежать lazy-load
-    active_dict = {
-        "id": active.id,
-        "token": active.token,
-        "quantity": active.quantity,
-        "price": active.price,
-        "amount": active.amount
-    }
     return templates.TemplateResponse(
-        "update.html",
+        "index.html",
         {
             "request": request,
             "form": form,
             "errors": errors,
             "messages": messages,
-            "active": active_dict
+            "active": active,
+            "actives": await service.get_all_actives(request),
+            "show_modal": True,
         }
     )
 
@@ -186,31 +199,23 @@ async def sell(active_id: int, request: Request, db: AsyncSession = Depends(get_
         "amount": rec.amount
     }
     if request.method == "POST" and not errors:
-        print ('Method POST')
         service = ActivesService(db)
         updated = await service.sell_active(active_id, rec, form)
         if updated:
             flash(request, "Recording results successfully!", category="success")
-            # Обновляем данные для отображения
-            # results_dict = {
-            #     "id": updated.id,
-            #     "date": updated.data,
-            #     "token": updated.token,
-            #     "quant": updated.quantity,
-            #     "price": updated.price,
-            #     "amount": updated.amount
-            # }
+
         else:
             flash(request, "Error recording results", category="error")
             # Передаём в шаблон словарь, чтобы избежать lazy-load
     return templates.TemplateResponse(
-        "record.html",
+        "index.html",
         {
             "request": request,
             "form": form,
             "errors": errors,
             "messages": messages,
             "active": results_dict,
+            "actives": await service.get_all_actives(request),
             "title": 'Recent token'
         }
     )

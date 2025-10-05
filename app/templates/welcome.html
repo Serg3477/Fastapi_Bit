@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>{{ title }}</title>
+  <link rel="stylesheet" href="/static/css/welcome.css">
+  <link rel="stylesheet" href="/static/css/modal.css">
+</head>
+<body>
+  <div class="welcome-overlay">
+    <div class="welcome-box">
+      <h1 class="welcome-title">Добро пожаловать в AltBase</h1>
+      <p class="welcome-subtitle">Начните с входа или регистрации</p>
+      <div class="welcome-actions">
+        <button class="btn-login" onclick="openLoginModal()">🔑 Login</button>
+        <button class="btn-register" onclick="openRegisterModal()">📝 Register</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Контейнеры для модалок -->
+  <div id="loginModalContainer"></div>
+  <div id="registerModalContainer"></div>
+
+  <!-- Скрипты модалок -->
+  <script src="/js/login.js"></script>
+  <script src="/js/register.js"></script>
+  <script src="/js/close_x.js"></script>
+</body>
+</html>

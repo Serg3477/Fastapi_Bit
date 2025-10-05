@@ -2,18 +2,35 @@
 
 {% block content %}
 {{ super() }}
+
 <hr>
 {% for cat, msg in messages %}
 <div class="flash {{ cat }}">{{ msg }}</div>
 {% endfor %}
-<h2>Sell operations records list</h2>
-       <hr align=left width="300px">
-<ul class="list-posts">
-    {% for p in records %}
-    <li>
-        <p class="title">  {{ p.id }} - {{ p.token }}  Qnt: {{ p.quantity }} Price: {{ p.price }} Profit - {{ p.profit }}</p><a href="/delRec/{{ p.id }}" class="btn btn-success">Del</a>
+
+<h2 class="caption">Sell operations records list</h2>
+<h2 class="caption_total">Total profit - {{ total_profit }}</h2>
+<div class="actives-container"> {% for p in records %}
+    <li class="list-posts"> <div class="title">
+        <table class="index"> <tr class="caption">
+            <th>ID</th>
+            <th>Date</th>
+            <th>Token</th>
+            <th>Quantity</th>
+            <th>Price</th>
+            <th>Profit</th>
+        </tr> <tr class="value">
+            <th>{{ p.id }}</th>
+            <th>{{ p.data }}</th>
+            <th>{{ p.token }}</th>
+            <th>{{ p.quantity | float | round(3) }}</th>
+            <th>{{ p.price | float | round(3) }}</th>
+            <th>{{ p.profit }}</th>
+        </tr>
+        </table>
+    </div> <a href="/delRec/{{ p.id }}" class="btn-warning">Delete</a>
     </li>
     {% endfor %}
-</ul>
-<h4>Total profit - {{ total_profit }}</h4>
+</div>
+
 {% endblock %}
