@@ -1,16 +1,18 @@
-from fastapi import APIRouter, Request, Depends, UploadFile, Form
+from fastapi import APIRouter, Request, Depends
 from fastapi.responses import RedirectResponse
 from fastapi.templating import Jinja2Templates
 from sqlalchemy.ext.asyncio import AsyncSession
 from sqlalchemy import select, delete
+
 from app.dependencies import get_db
 from app.models.user import User
 from app.forms.register_form import RegisterForm
 from app.forms.login_form import LoginForm
 from app.middleware.sessions import get_session_user, set_session_user
-from passlib.hash import bcrypt
 from app.middleware.sessions import flash, get_flashed_messages, clear_session_user
-import os
+
+
+from app.services import AuthService
 
 users_router = APIRouter()
 templates = Jinja2Templates(directory="app/templates")
@@ -27,84 +29,50 @@ menu = [
 
 @users_router.api_route("/register", methods=["GET", "POST"])
 async def register(request: Request, db: AsyncSession = Depends(get_db)):
+    messages = get_flashed_messages(request)
+    service = AuthService(db)
     form = RegisterForm(request)
     await form.load_data()
-    messages = get_flashed_messages(request)
+    users = service.get_all_actives(request)
+    await service.order_by_id(users)
     errors = form.errors
 
     if request.method == "POST":
         if not form.is_valid():
             flash(request, "Incorrect field filling.", category="error")
         else:
-            # Проверка уникальности
-            existing = await db.execute(
-                select(User).where((User.name == form.name) | (User.email == form.email))
-            )
-            if existing.scalars().first():
-                flash(request, "User with this name or email already exists.", category="error")
-            else:
-                # Хешируем пароль
-                hashed_password = bcrypt.hash(form.psw)
+            result = await service.register(form, request)
 
-                # Обработка аватара
-                avatar_path = None
-                if form.avatar:
-                    filename = f"{form.name}_{form.avatar.filename}"
-                    avatar_path = os.path.join("Avatars", filename)
-                    os.makedirs(os.path.dirname(avatar_path), exist_ok=True)
-                    with open(avatar_path, "wb") as f:
-                        f.write(await form.avatar.read())
-
-                # Создаём пользователя
-                user = User(
-                    name=form.name,
-                    email=form.email,
-                    psw=hashed_password,
-                    avatar=avatar_path
-                )
-                db.add(user)
-                await db.commit()
+            if result:
                 flash(request, "Registration successful!", category="success")
-                return RedirectResponse(url="/login", status_code=303)
+                return RedirectResponse(url="/", status_code=303)
 
-    return templates.TemplateResponse("register.html", {
+    return templates.TemplateResponse("index.html", {
         "request": request,
         "form": form,
         "messages": messages,
-        "title": "Registration"
+        "errors": form.errors
     })
+
 
 
 
 @users_router.api_route("/login", methods=["GET", "POST"])
 async def login(request: Request, db: AsyncSession = Depends(get_db)):
-    # Если уже авторизован — перенаправляем
-    # current_user = get_session_user(request)
-    # if current_user:
-    #     return RedirectResponse(url="/profile", status_code=303)
-
+    messages = get_flashed_messages(request)
+    service = AuthService(db)
     form = LoginForm(request)
     await form.load_data()
-    messages = get_flashed_messages(request)
+    errors = form.errors
 
     if request.method == "POST":
         if not form.is_valid():
             for field, msg in form.errors.items():
                 flash(request, f"{field}: {msg}", category="error")
         else:
-            # Ищем пользователя по имени или email
-            result = await db.execute(
-                select(User).where(User.name == form.name)
-            )
-            user = result.scalars().first()
-
-            if user and bcrypt.verify(form.psw, user.psw):
-                # Устанавливаем сессию
-                set_session_user(request, user.id, remember=form.remember)
+            result = await service.login(form, request)
+            if result:
                 flash(request, "Login successful!", category="success")
-
-                # Перенаправление на next или профиль
-                # next_url = request.query_params.get("next") or "/profile"
                 return RedirectResponse(url="/", status_code=303)
             else:
                 flash(request, "Incorrect username/email or password.", category="error")
@@ -113,7 +81,7 @@ async def login(request: Request, db: AsyncSession = Depends(get_db)):
         "request": request,
         "form": form,
         "messages": messages,
-        # "actives": await service.get_all_actives(request),
+        "errors": form.errors,
         "show_modal": True,
     })
 

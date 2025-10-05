@@ -61,13 +61,13 @@ async def index(request: Request, db: AsyncSession = Depends(get_db), current_us
 @active_router.api_route("/create", methods=["POST", "GET"], response_class=HTMLResponse)
 async def create_post(request: Request, db: AsyncSession = Depends(get_db)):
     messages = get_flashed_messages(request)
-    actives = await ActivesService(db).get_all_actives(request)
+    service = ActivesService(db)
     form = AddActiveForm(request)
     await form.load_data()
     errors = form.errors
+
     if request.method == "POST":
         if form.is_valid(request):
-            service = ActivesService(db)
             result = await service.create_active(form)
 
             if not result:
@@ -153,7 +153,6 @@ async def update(active_id: int, request: Request, db: AsyncSession = Depends(ge
             "messages": messages,
             "active": active,
             "actives": await service.get_all_actives(request),
-            "show_modal": True,
         }
     )
 

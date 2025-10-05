@@ -8,6 +8,14 @@
 <div class="flash {{ cat }}">{{ msg }}</div>
 {% endfor %}
 
+{% if errors %}
+  {% for field, err in errors.items() %}
+    <div class="flash error">
+      {{ field|capitalize }}: {{ err }}
+    </div>
+  {% endfor %}
+{% endif %}
+
 <h2 class="caption">Purcashe actives list</h2>
 <div class="actives-container"> {% for p in actives %}
     <li class="list-posts"> <div class="title">

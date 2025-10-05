@@ -6,6 +6,7 @@ class LoginForm:
         self.name: str = ""
         self.psw: str = ""
         self.remember: bool
+        self.errors: list[str] = []
 
     async def load_data(self):
         form = await self.request.form()
