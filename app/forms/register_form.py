@@ -20,7 +20,7 @@ class RegisterForm:
         self.errors = {}
 
 
-    def is_valid(self) -> bool:
+    def is_valid(self):
         # Имя: не пустое, минимум 3 символа
         if not self.name or len(self.name) < 3:
             self.errors["name"] = "Name must be at least 3 characters."
@@ -37,7 +37,8 @@ class RegisterForm:
             self.errors["psw"] = "Password must contain letters and numbers."
 
         # Аватар: необязателен, но можно добавить проверку расширения
-        if self.avatar and not self.avatar.filename.lower().endswith((".png", ".jpg", ".jpeg")):
-            self.errors["avatar"] = "Avatar must be a .png, .jpg, or .jpeg file."
+        if self.avatar and hasattr(self.avatar, "filename") and self.avatar.filename:
+            if not self.avatar.filename.lower().endswith((".png", ".jpg", ".jpeg")):
+                self.errors["avatar"] = "Avatar must be a .png, .jpg, or .jpeg file."
 
-        return not self.errors
+        return len (self.errors) == 0

@@ -1,9 +1,0 @@
-{% extends 'base1.html' %}
-
-{% block content %}
-{{ super() }}
-{% for cat, msg in messages %}
-<div class="flash {{ cat }}">{{ msg }}</div>
-<p>Return to <a href="{{ url_for('base') }}">main page</a></p>
-{% endfor %}
-{% endblock %}

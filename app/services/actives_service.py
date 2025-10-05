@@ -1,9 +1,6 @@
-from fastapi import Request, Depends
+from fastapi import Request
 from sqlalchemy import select, delete, text
-from sqlalchemy.exc import SQLAlchemyError
 from sqlalchemy.ext.asyncio import AsyncSession
-from app.dependencies import get_db
-from app.forms import AddActiveForm
 from app.middleware import flash
 from app.models import Actives
 from app.models import Results
@@ -58,7 +55,6 @@ class ActivesService:
             return True
         except Exception as e:
             await self.db.rollback()
-            print(f"Error saving active: {e}")
             return False
 
     @staticmethod
@@ -73,6 +69,7 @@ class ActivesService:
 
         print('Average price:', average_price)
         return rec
+
 
     async def delete_active_by_id(self, active_id: int) -> bool:
         try:
