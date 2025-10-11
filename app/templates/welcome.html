@@ -5,8 +5,12 @@
   <title>{{ title }}</title>
   <link rel="stylesheet" href="/static/css/welcome.css">
   <link rel="stylesheet" href="/static/css/modal.css">
+   <link rel="stylesheet" href="/static/css/style.css"/>
 </head>
 <body>
+    {% for cat, msg in messages %}
+        <div class="flash {{ cat }}">{{ msg }}</div>
+    {% endfor %}
   <div class="welcome-overlay">
     <div class="welcome-box">
       <h1 class="welcome-title">Добро пожаловать в AltBase</h1>

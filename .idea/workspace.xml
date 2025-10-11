@@ -4,23 +4,30 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="49c0dc9b-95dd-450b-a66c-9c08dca1f8da" name="Changes" comment="Project refinement: interface, modal windows (JS), login, register">
+    <list default="true" id="49c0dc9b-95dd-450b-a66c-9c08dca1f8da" name="Changes" comment="Project refinement: updating interface, modal windows (JS), login, register">
+      <change afterPath="$PROJECT_DIR$/app/core/db_creator.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/app/core/db_history.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/app/core/db_tenant.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/app/models/history.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/app/services/history_service.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.env" beforeDir="false" afterPath="$PROJECT_DIR$/.env" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/app/api/routes_active.py" beforeDir="false" afterPath="$PROJECT_DIR$/app/api/routes_active.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/app/api/routes_users.py" beforeDir="false" afterPath="$PROJECT_DIR$/app/api/routes_users.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/forms/login_form.py" beforeDir="false" afterPath="$PROJECT_DIR$/app/forms/login_form.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/forms/register_form.py" beforeDir="false" afterPath="$PROJECT_DIR$/app/forms/register_form.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/core/__init__.py" beforeDir="false" afterPath="$PROJECT_DIR$/app/core/__init__.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/core/db.py" beforeDir="false" afterPath="$PROJECT_DIR$/app/core/db_users.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/core/init_db.py" beforeDir="false" afterPath="$PROJECT_DIR$/app/core/init_db.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/core/settings.py" beforeDir="false" afterPath="$PROJECT_DIR$/app/core/settings.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/dependencies.py" beforeDir="false" afterPath="$PROJECT_DIR$/app/dependencies.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/main.py" beforeDir="false" afterPath="$PROJECT_DIR$/app/main.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/middleware/sessions.py" beforeDir="false" afterPath="$PROJECT_DIR$/app/middleware/sessions.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/models/__init__.py" beforeDir="false" afterPath="$PROJECT_DIR$/app/models/__init__.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/models/actives.py" beforeDir="false" afterPath="$PROJECT_DIR$/app/models/actives.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/models/results.py" beforeDir="false" afterPath="$PROJECT_DIR$/app/models/results.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/models/user.py" beforeDir="false" afterPath="$PROJECT_DIR$/app/models/user.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/app/services/actives_service.py" beforeDir="false" afterPath="$PROJECT_DIR$/app/services/actives_service.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/app/services/auth_service.py" beforeDir="false" afterPath="$PROJECT_DIR$/app/services/auth_service.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/templates/base.html" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/templates/delProf.html" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/templates/dell.html" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/templates/index.html" beforeDir="false" afterPath="$PROJECT_DIR$/app/templates/index.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/templates/login.html" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/templates/page404.html" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/templates/profile.html" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/templates/register.html" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/templates/update.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/templates/welcome.html" beforeDir="false" afterPath="$PROJECT_DIR$/app/templates/welcome.html" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -30,9 +37,9 @@
   <component name="FileTemplateManagerImpl">
     <option name="RECENT_TEMPLATES">
       <list>
-        <option value="Python Script" />
         <option value="JavaScript File" />
         <option value="HTML File" />
+        <option value="Python Script" />
       </list>
     </option>
   </component>
@@ -68,7 +75,7 @@
     "git-widget-placeholder": "main",
     "ignore.virus.scanning.warn.message": "true",
     "junie.onboarding.icon.badge.shown": "true",
-    "last_opened_file_path": "/home/serg/Downloads/O2AMKN5Y7R.zip",
+    "last_opened_file_path": "/home/serg/PycharmProjects/GPT/Flask_Finish",
     "node.js.detected.package.eslint": "true",
     "node.js.detected.package.tslint": "true",
     "node.js.selected.package.eslint": "(autodetect)",
@@ -113,6 +120,8 @@
       <workItem from="1759380482282" duration="2803000" />
       <workItem from="1759491257421" duration="18794000" />
       <workItem from="1759644017260" duration="32793000" />
+      <workItem from="1759899715961" duration="16544000" />
+      <workItem from="1760162617316" duration="3434000" />
     </task>
     <task id="LOCAL-00001" summary="First commit.&#10;Beginning to make a project in FastAPI.">
       <option name="closed" value="true" />
@@ -187,5 +196,15 @@
     <MESSAGE value="Working with user register and login" />
     <MESSAGE value="Project refinement: interface, modal windows (JS), login, register" />
     <option name="LAST_COMMIT_MESSAGE" value="Project refinement: interface, modal windows (JS), login, register" />
+  </component>
+  <component name="XDebuggerManager">
+    <breakpoint-manager>
+      <breakpoints>
+        <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
+          <url>file://$PROJECT_DIR$/app/models/__init__.py</url>
+          <option name="timeStamp" value="1" />
+        </line-breakpoint>
+      </breakpoints>
+    </breakpoint-manager>
   </component>
 </project>

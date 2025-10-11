@@ -5,10 +5,10 @@ from sqlalchemy import select, func
 from sqlalchemy.ext.asyncio import AsyncSession
 from starlette.responses import HTMLResponse
 
-from app.dependencies import get_db
+from app.dependencies import get_user_db, get_current_user
 from app.forms import AddActiveForm
 from app.forms import SellActiveForm
-from app.middleware.sessions import get_session_user, flash, get_flashed_messages, get_current_user
+from app.middleware.sessions import get_session_user, flash, get_flashed_messages
 from app.models import Actives, User
 from app.models import Results
 from app.services import ActivesService
@@ -30,20 +30,18 @@ menu = [
 
 
 @active_router.get("/")
-async def index(request: Request, db: AsyncSession = Depends(get_db), current_user: User = Depends(get_current_user)):
-    user_id = get_session_user(request)
-
-    # Если не залогинен → титульная страница
+async def index(
+    request: Request,
+    current_user: User | None = Depends(get_current_user)
+):
     if not current_user:
         return templates.TemplateResponse("welcome.html", {
             "request": request,
             "title": "Welcome"
         })
 
-    # Если залогинен → index.html
-    result = await db.execute(select(User).where(User.id == user_id))
-    current_user = result.scalar_one_or_none()
-
+    # Только если авторизован — подключаемся к индивидуальной базе
+    db: AsyncSession = await anext(get_user_db(current_user))  # 👈 вручную вызываем
     service = ActivesService(db)
     actives = await service.get_all_actives(request)
     await service.order_by_id(actives)
@@ -53,13 +51,17 @@ async def index(request: Request, db: AsyncSession = Depends(get_db), current_us
         "request": request,
         "actives": actives,
         "messages": messages,
-        "user": current_user or None,
+        "user": current_user,
         "title": "Main page of the site",
     })
 
 
 @active_router.api_route("/create", methods=["POST", "GET"], response_class=HTMLResponse)
-async def create_post(request: Request, db: AsyncSession = Depends(get_db)):
+async def create_post(
+        request: Request,
+        db: AsyncSession = Depends(get_user_db),
+        current_user: User = Depends(get_current_user)
+):
     messages = get_flashed_messages(request)
     service = ActivesService(db)
     form = AddActiveForm(request)
@@ -75,26 +77,24 @@ async def create_post(request: Request, db: AsyncSession = Depends(get_db)):
             else:
                 flash(request, "Created successfully!", category="success")
 
-            actives = await ActivesService(db).get_all_actives(request)
-            return templates.TemplateResponse("index.html", {
-                "request": request,
-                "form": form,
-                "errors": errors,
-                "messages": messages,
-                "actives": actives,
-                "show_modal": False
-            })
-        messages = get_flashed_messages(request)
-        # GET-запрос — просто отображаем пустую форму
+    actives = await ActivesService(db).get_all_actives(request)
     return templates.TemplateResponse("index.html", {
         "request": request,
         "form": form,
         "errors": errors,
         "messages": messages,
+        "actives": actives,
+        "show_modal": False,
+        "user": current_user,
+        "title": "Create new record"
     })
 
 @active_router.get("/delete/{active_id}")
-async def delete_active(active_id: int, request: Request, db: AsyncSession = Depends(get_db)):
+async def delete_active(
+        active_id: int,
+        request: Request,
+        db: AsyncSession = Depends(get_user_db),
+):
     service = ActivesService(db)
     actives = await service.get_all_actives(request)
     success = await service.delete_active_by_id(active_id)
@@ -107,7 +107,10 @@ async def delete_active(active_id: int, request: Request, db: AsyncSession = Dep
 
 
 @active_router.get("/delRec/{result_id}")
-async def delete_result(result_id: int, request: Request, db: AsyncSession = Depends(get_db)):
+async def delete_result(
+        result_id: int, request:
+        Request, db: AsyncSession = Depends(get_user_db)
+):
     service = ActivesService(db)
     results = await service.get_all_results(request)
     success = await service.delete_result_by_id(result_id)
@@ -121,7 +124,12 @@ async def delete_result(result_id: int, request: Request, db: AsyncSession = Dep
 
 
 @active_router.api_route("/update/{active_id}", methods=["GET", "POST"], response_class=HTMLResponse)
-async def update(active_id: int, request: Request, db: AsyncSession = Depends(get_db)):
+async def update(
+        active_id: int,
+        request: Request,
+        db: AsyncSession = Depends(get_user_db),
+        current_user: User = Depends(get_current_user)
+):
     messages = get_flashed_messages(request)
     service = ActivesService(db)
     # Загружаем запись один раз
@@ -153,12 +161,17 @@ async def update(active_id: int, request: Request, db: AsyncSession = Depends(ge
             "messages": messages,
             "active": active,
             "actives": await service.get_all_actives(request),
+            "user": current_user,
         }
     )
 
 
 @active_router.get("/main")
-async def base(request: Request, db: AsyncSession = Depends(get_db)):
+async def base(
+        request: Request,
+        db: AsyncSession = Depends(get_user_db),
+        current_user: User = Depends(get_current_user)
+):
     messages = get_flashed_messages(request)
     service = ActivesService(db)
 
@@ -177,13 +190,19 @@ async def base(request: Request, db: AsyncSession = Depends(get_db)):
             "title": 'Database of transaction history',
             "records": results,
             "total_profit": total_sum,
-            "messages": messages
+            "messages": messages,
+            "user": current_user
         }
     )
 
 
 @active_router.api_route("/main/{active_id}", methods=['POST', 'GET'])
-async def sell(active_id: int, request: Request, db: AsyncSession = Depends(get_db)):
+async def sell(
+        active_id: int,
+        request: Request,
+        db: AsyncSession = Depends(get_user_db),
+        current_user: User = Depends(get_current_user)
+):
     rec = (await db.execute(select(Actives).where(Actives.id == active_id))).scalars().first()
     messages = get_flashed_messages(request)
     form = SellActiveForm(request)
@@ -206,8 +225,7 @@ async def sell(active_id: int, request: Request, db: AsyncSession = Depends(get_
         else:
             flash(request, "Error recording results", category="error")
             # Передаём в шаблон словарь, чтобы избежать lazy-load
-    return templates.TemplateResponse(
-        "index.html",
+    return templates.TemplateResponse("index.html",
         {
             "request": request,
             "form": form,
@@ -215,6 +233,7 @@ async def sell(active_id: int, request: Request, db: AsyncSession = Depends(get_
             "messages": messages,
             "active": results_dict,
             "actives": await service.get_all_actives(request),
+            "user": current_user,
             "title": 'Recent token'
         }
     )

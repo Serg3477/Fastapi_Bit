@@ -1,5 +1,4 @@
 from fastapi import FastAPI, Request
-from fastapi.staticfiles import StaticFiles
 from fastapi.templating import Jinja2Templates
 from contextlib import asynccontextmanager
 from starlette.middleware.sessions import SessionMiddleware
@@ -9,7 +8,6 @@ from app.core import settings
 from app.core import init_db
 from app.api import active_router
 from app.api import users_router
-# from app.api.routes_admin import router as admin_router
 from app.middleware import get_flashed_messages
 
 # 👇 lifespan: замена on_event("startup") Это функция, инициализации базы (например, Base.metadata.create_all),

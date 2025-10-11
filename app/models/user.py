@@ -1,7 +1,7 @@
-from sqlalchemy import Column, Integer, String, Boolean
-from app.core.db import Base
+from sqlalchemy import Column, Integer, String
+from app.core.db_users import UserBase
 
-class User(Base):
+class User(UserBase):
     __tablename__ = "users"
     __table_args__ = {"sqlite_autoincrement": True}
 
@@ -10,3 +10,4 @@ class User(Base):
     email = Column(String, nullable=False)
     psw = Column(String, nullable=False)
     avatar = Column(String, nullable=True)
+    db_filename = Column(String, nullable=True)

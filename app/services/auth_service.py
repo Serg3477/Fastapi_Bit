@@ -6,6 +6,7 @@ from typing import List
 import os
 from werkzeug.utils import secure_filename
 
+from app.core import create_user_database, settings
 from app.middleware.sessions import set_session_user
 from app.models import User
 from app.middleware import flash
@@ -16,7 +17,8 @@ class AuthService:
         self.db = db
 
 
-    async def get_all_actives(self, request: Request) -> List[User]:
+
+    async def get_all_users(self, request: Request) -> List[User]:
         result = await self.db.execute(select(User))
         users = result.scalars().all()
         if not users:
@@ -27,13 +29,20 @@ class AuthService:
 
     async def login(self, form, request):
         result = await self.db.execute(
-            select(User).where((User.name == form.name))
+            select(User).where(User.name == form.name)
         )
         user = result.scalars().first()
+        if not user:
+            flash(request, "There is no user registered with this name.", category="error")
+            return None
+
         pwd_context = CryptContext(schemes=["bcrypt"], deprecated="auto")
-        if user and pwd_context.verify(form.psw, user.psw):  # или check_password_hash
+        if pwd_context.verify(form.psw, user.psw):
             set_session_user(request, user.id, remember=form.remember)
             return user
+        else:
+            flash(request, "Incorrect password", category="error")
+            return None
 
 
     async def register(self, form, request: Request) -> bool:
@@ -43,6 +52,7 @@ class AuthService:
         )
         if existing.scalars().first():
             flash(request, "User with this name or email already exists.", category="error")
+            return False
         else:
             # Хешируем пароль
             pwd_context = CryptContext(schemes=["bcrypt"], deprecated="auto")
@@ -66,14 +76,24 @@ class AuthService:
                 name=form.name,
                 email=form.email,
                 psw=hashed_password,
-                avatar=avatar_path
+                avatar=avatar_path,
             )
             try:
                 self.db.add(user)
                 await self.db.commit()
                 await self.db.refresh(user)
 
-                # ✅ Сразу логиним пользователя
+                # Создаём индивидуальную БД
+                db_filename = f"db_{user.id}.db"
+                db_path = os.path.join(settings.USER_DB_DIR, db_filename)
+                os.makedirs(settings.USER_DB_DIR, exist_ok=True)
+                create_user_database(db_path)
+
+                # Обновляем поле db_filename
+                user.db_filename = db_path
+                await self.db.commit()
+
+                # Сразу логиним пользователя
                 set_session_user(request, user.id, remember=getattr(form, "remember", False))
 
                 return True

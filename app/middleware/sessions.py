@@ -2,12 +2,14 @@ from fastapi import Request, HTTPException, status, Depends
 from sqlalchemy import select
 from sqlalchemy.ext.asyncio.session import AsyncSession
 
-from app.dependencies import get_db
+from app.core import SessionUsers
 from app.models import User
 
 
 def get_session_user(request: Request) -> int | None:
-    return request.session.get("user_id")
+    user_id = request.session.get("user_id")
+    print("→ session user_id:", user_id)
+    return user_id
 
 
 # чтобы сохранить его ID в сессии и optionally включить "запомнить меня"
@@ -43,15 +45,7 @@ def get_flashed_messages(request: Request) -> list[tuple[str, str]]:
     # удаляет список сообщений из сессии и возвращает его. Если сообщений нет, возвращает пустой список
     return request.session.pop("_flashes", [])
 
-async def get_current_user(
-    request: Request,
-    db: AsyncSession = Depends(get_db)
-):
-    user_id = get_session_user(request)
-    if not user_id:
-        return None
-    result = await db.execute(select(User).where(User.id == user_id))
-    return result.scalar_one_or_none()
+
 
 
 

@@ -4,7 +4,7 @@ from fastapi.templating import Jinja2Templates
 from sqlalchemy.ext.asyncio import AsyncSession
 from sqlalchemy import select, delete
 
-from app.dependencies import get_db
+from app.dependencies import get_db, get_current_user
 from app.models.user import User
 from app.forms.register_form import RegisterForm
 from app.forms.login_form import LoginForm
@@ -33,7 +33,7 @@ async def register(request: Request, db: AsyncSession = Depends(get_db)):
     service = AuthService(db)
     form = RegisterForm(request)
     await form.load_data()
-    users = service.get_all_actives(request)
+    users = await service.get_all_users(request)
     await service.order_by_id(users)
     errors = form.errors
 
@@ -45,7 +45,13 @@ async def register(request: Request, db: AsyncSession = Depends(get_db)):
 
             if result:
                 flash(request, "Registration successful!", category="success")
-                return RedirectResponse(url="/", status_code=303)
+            else:
+                flash(request, "Registration failed!", category="error")
+                return templates.TemplateResponse("welcome.html", {
+                    "request": request,
+                    "title": "Welcome",
+                    "messages": messages
+                })
 
     return templates.TemplateResponse("index.html", {
         "request": request,
@@ -66,17 +72,16 @@ async def login(request: Request, db: AsyncSession = Depends(get_db)):
     errors = form.errors
 
     if request.method == "POST":
-        if not form.is_valid():
-            for field, msg in form.errors.items():
-                flash(request, f"{field}: {msg}", category="error")
+        result = await service.login(form, request)
+        if result:
+            flash(request, "Login successful!", category="success")
+            return RedirectResponse(url="/", status_code=303)
         else:
-            result = await service.login(form, request)
-            if result:
-                flash(request, "Login successful!", category="success")
-                return RedirectResponse(url="/", status_code=303)
-            else:
-                flash(request, "Incorrect username/email or password.", category="error")
-
+            return templates.TemplateResponse("welcome.html", {
+                "request": request,
+                "title": "Welcome",
+                "messages": messages
+            })
     return templates.TemplateResponse("index.html", {
         "request": request,
         "form": form,

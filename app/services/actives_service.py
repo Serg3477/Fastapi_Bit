@@ -8,6 +8,7 @@ from typing import List
 from datetime import datetime, date
 
 
+
 class ActivesService:
     def __init__(self, db: AsyncSession):
         self.db = db

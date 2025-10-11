@@ -1,7 +1,8 @@
 from pydantic_settings import BaseSettings
 
 class Settings(BaseSettings):
-    DATABASE_URL: str
+    USER_DB_URL: str
+    USER_DB_DIR: str
     SECRET_KEY: str
 
 
