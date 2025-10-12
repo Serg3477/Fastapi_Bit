@@ -132,3 +132,57 @@
 .btn-update { background: #3498db; color: #fff; }
 .btn-delete { background: #e74c3c; color: #fff; }
 .btn-logout { background: #2ecc71; color: #fff; }
+
+/* CSS для скролла, resize, drag */
+.history-box {
+  resize: both;
+  overflow: hidden;
+  min-width: 300px;
+  min-height: 200px;
+  max-height: 80vh;
+  max-width: 90vw;
+  background: #171414;
+  padding: 20px 40px;
+  border: 1px solid #7b7a84;
+  border-radius: 10px;
+  color: #c5fff4;
+  text-align: left;
+  box-shadow: 0 0 20px rgba(0,0,0,0.2);
+  position: relative;
+}
+
+.history-content {
+  max-height: 60vh;
+  overflow-y: auto;
+  padding-right: 10px;
+  margin-top: 1rem;
+  position: relative;
+  display: block;
+}
+
+.history-content::-webkit-scrollbar {
+  width: 8px;
+}
+.history-content::-webkit-scrollbar-track {
+  background: #1e1e1e;
+}
+.history-content::-webkit-scrollbar-thumb {
+  background-color: #00c896;
+  border-radius: 4px;
+}
+
+.history-entry {
+  margin-bottom: 0.75rem;
+  font-size: 0.9rem;
+  line-height: 1.5;
+  color: #c5fff4;
+  border-bottom: 1px solid #2e2e2e;
+  padding-bottom: 6px;
+}
+
+.modal-overlay.no-overlay {
+  background-color: transparent;
+}
+
+
+

@@ -4,7 +4,8 @@ from fastapi.templating import Jinja2Templates
 from sqlalchemy.ext.asyncio import AsyncSession
 from sqlalchemy import select, delete
 
-from app.dependencies import get_db, get_current_user
+from app.dependencies import get_db, get_current_user, get_history_db
+from app.models.history import UserHistory
 from app.models.user import User
 from app.forms.register_form import RegisterForm
 from app.forms.login_form import LoginForm
@@ -183,3 +184,16 @@ async def update(
         "show_modal": True,
         "title": "Update Profile"
     })
+
+@users_router.get("/history")
+async def get_history(db: AsyncSession = Depends(get_history_db)):
+    result = await db.execute(select(UserHistory))
+    entries = result.scalars().all()
+    return [
+        {
+            "timestamp": str(e.timestamp),
+            "action": e.action,
+            "details": e.details
+        } for e in entries
+    ]
+

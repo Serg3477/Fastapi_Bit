@@ -4,6 +4,7 @@ from typing import AsyncGenerator
 from fastapi import Depends, Request, HTTPException
 from sqlalchemy import select
 
+from app.core.db_history import SessionHistory
 from app.models import User
 from app.middleware.sessions import get_session_user, clear_session_user
 from app.core.db_users import SessionUsers
@@ -39,4 +40,9 @@ async def get_user_db(user: User = Depends(get_current_user)) -> AsyncGenerator[
     engine = create_async_engine(f"sqlite+aiosqlite:///{user.db_filename}", echo=True)
     SessionLocal = async_sessionmaker(engine, class_=AsyncSession, expire_on_commit=False)
     async with SessionLocal() as session:
+        yield session
+
+# Получаем сессию для работы с историей
+async def get_history_db():
+    async with SessionHistory() as session:
         yield session

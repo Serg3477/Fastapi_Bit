@@ -4,26 +4,13 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="49c0dc9b-95dd-450b-a66c-9c08dca1f8da" name="Changes" comment="Project refinement: updating interface, modal windows (JS), login, register. Add history/logging">
-      <change afterPath="$PROJECT_DIR$/app/js/update_user.js" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/app/static/css/flash_message.css" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.env" beforeDir="false" afterPath="$PROJECT_DIR$/.env" afterDir="false" />
+    <list default="true" id="49c0dc9b-95dd-450b-a66c-9c08dca1f8da" name="Changes" comment="Adding a router &quot;Changing user data&quot;.">
+      <change afterPath="$PROJECT_DIR$/app/js/history.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/api/routes_active.py" beforeDir="false" afterPath="$PROJECT_DIR$/app/api/routes_active.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/app/api/routes_users.py" beforeDir="false" afterPath="$PROJECT_DIR$/app/api/routes_users.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/core/db_creator.py" beforeDir="false" afterPath="$PROJECT_DIR$/app/core/db_creator.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/core/db_history.py" beforeDir="false" afterPath="$PROJECT_DIR$/app/core/db_history.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/core/init_db.py" beforeDir="false" afterPath="$PROJECT_DIR$/app/core/init_db.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/core/settings.py" beforeDir="false" afterPath="$PROJECT_DIR$/app/core/settings.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/app/dependencies.py" beforeDir="false" afterPath="$PROJECT_DIR$/app/dependencies.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/js/profile.js" beforeDir="false" afterPath="$PROJECT_DIR$/app/js/profile.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/main.py" beforeDir="false" afterPath="$PROJECT_DIR$/app/main.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/models/history.py" beforeDir="false" afterPath="$PROJECT_DIR$/app/models/history.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/services/actives_service.py" beforeDir="false" afterPath="$PROJECT_DIR$/app/services/actives_service.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/services/auth_service.py" beforeDir="false" afterPath="$PROJECT_DIR$/app/services/auth_service.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/services/history_service.py" beforeDir="false" afterPath="$PROJECT_DIR$/app/services/history_service.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/static/css/modal.css" beforeDir="false" afterPath="$PROJECT_DIR$/app/static/css/modal.css" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/app/templates/base1.html" beforeDir="false" afterPath="$PROJECT_DIR$/app/templates/base1.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/templates/index.html" beforeDir="false" afterPath="$PROJECT_DIR$/app/templates/index.html" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -119,7 +106,7 @@
       <workItem from="1759899715961" duration="16544000" />
       <workItem from="1760162617316" duration="16746000" />
       <workItem from="1760187507713" duration="10772000" />
-      <workItem from="1760249406025" duration="11668000" />
+      <workItem from="1760249406025" duration="16954000" />
     </task>
     <task id="LOCAL-00001" summary="First commit.&#10;Beginning to make a project in FastAPI.">
       <option name="closed" value="true" />
@@ -177,7 +164,15 @@
       <option name="project" value="LOCAL" />
       <updated>1760166142678</updated>
     </task>
-    <option name="localTasksCounter" value="8" />
+    <task id="LOCAL-00008" summary="Adding a router &quot;Changing user data&quot;.">
+      <option name="closed" value="true" />
+      <created>1760261201814</created>
+      <option name="number" value="00008" />
+      <option name="presentableId" value="LOCAL-00008" />
+      <option name="project" value="LOCAL" />
+      <updated>1760261201814</updated>
+    </task>
+    <option name="localTasksCounter" value="9" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -202,7 +197,8 @@
     <MESSAGE value="Working with user register and login" />
     <MESSAGE value="Project refinement: interface, modal windows (JS), login, register" />
     <MESSAGE value="Project refinement: updating interface, modal windows (JS), login, register. Add history/logging" />
-    <option name="LAST_COMMIT_MESSAGE" value="Project refinement: updating interface, modal windows (JS), login, register. Add history/logging" />
+    <MESSAGE value="Adding a router &quot;Changing user data&quot;." />
+    <option name="LAST_COMMIT_MESSAGE" value="Adding a router &quot;Changing user data&quot;." />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
