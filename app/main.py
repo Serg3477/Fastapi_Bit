@@ -3,6 +3,8 @@ from fastapi.templating import Jinja2Templates
 from contextlib import asynccontextmanager
 from starlette.middleware.sessions import SessionMiddleware
 from fastapi.staticfiles import StaticFiles
+from app.core.init_db import create_history_database
+
 
 from app.core import settings
 from app.core import init_db
@@ -46,6 +48,6 @@ def template_context_processor(request: Request):
 # Добавляет template_context_processor как глобальную переменную в Jinja2.
 templates.env.globals["template_context_processor"] = template_context_processor
 
-
+create_history_database()
 
 

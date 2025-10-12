@@ -7,9 +7,10 @@ class UserHistory(HistoryBase):
     __tablename__ = "history"
 
     id = Column(Integer, primary_key=True)
-    user_id = Column(Integer, ForeignKey("users.id"))
+    user_name = Column(String)
+    timestamp = Column(DateTime)
     action = Column(String)
     details = Column(String)
-    timestamp = Column(DateTime)
 
-    user = relationship("User", back_populates="logs")
+
+    # user = relationship("User", back_populates="logs")

@@ -1,18 +1,20 @@
 from fastapi import Request
 from sqlalchemy import select, delete, text
 from sqlalchemy.ext.asyncio import AsyncSession
+from sqlalchemy.sql.functions import current_user
+
 from app.middleware import flash
 from app.models import Actives
 from app.models import Results
 from typing import List
 from datetime import datetime, date
 
+from app.services.history_service import log_event
 
 
 class ActivesService:
     def __init__(self, db: AsyncSession):
         self.db = db
-
 
     async def get_all_actives(self, request: Request) -> List[Actives]:
         result = await self.db.execute(select(Actives))
@@ -22,7 +24,6 @@ class ActivesService:
         actives.sort(key=lambda a: a.id)
         return actives
 
-
     async def get_all_results(self, request: Request) -> List[Actives]:
         result = await self.db.execute(select(Results))
         results = result.scalars().all()
@@ -31,8 +32,7 @@ class ActivesService:
         results.sort(key=lambda a: a.id)
         return results
 
-
-    async def create_active(self, form_data) -> bool:
+    async def create_active(self, current_user, form_data) -> bool:
         token = form_data.token
         quantity = float(form_data.quantity)
         price = float(form_data.price)
@@ -53,6 +53,8 @@ class ActivesService:
             self.db.add(active)
             await self.db.commit()
             await self.db.refresh(active)
+            await log_event(current_user, "Create",
+                            f"Created record: {active.quantity} token(s) {active.token} by price {active.price} USD. Total amount {active.amount} USD.")
             return True
         except Exception as e:
             await self.db.rollback()
@@ -71,38 +73,41 @@ class ActivesService:
         print('Average price:', average_price)
         return rec
 
-
-    async def delete_active_by_id(self, active_id: int) -> bool:
+    async def delete_active_by_id(self, active_id: int, current_user) -> bool:
         try:
+            active = await self.db.get(Actives, active_id)
             result = await self.db.execute(
                 delete(Actives).where(Actives.id == active_id)
             )
             if result.rowcount == 0:
                 return False  # ничего не удалено
             await self.db.commit()
+            await log_event(current_user, "Delete",
+                            f"Deleted record {active.quantity} token(s) {active.token}")
             return True
         except Exception as e:
             await self.db.rollback()
             print(f"Error deleting active: {e}")
             return False
 
-
-    async def delete_result_by_id(self, result_id: int) -> bool:
+    async def delete_result_by_id(self, result_id: int, current_user) -> bool:
         try:
+            active = await self.db.get(Actives, result_id)
             result = await self.db.execute(
                 delete(Results).where(Results.id == result_id)
             )
             if result.rowcount == 0:
                 return False  # ничего не удалено
             await self.db.commit()
+            await log_event(current_user, "Delete",
+                            f"Deleted profit record {active.quantity} token(s) {active.token}")
             return True
         except Exception as e:
             await self.db.rollback()
             print(f"Error deleting result: {e}")
             return False
 
-
-    async def update_active(self, active_id: int, form_data):
+    async def update_active(self,  active_id: int, current_user,form_data):
         try:
             active = await self.db.get(Actives, active_id)
             if not active:
@@ -119,13 +124,14 @@ class ActivesService:
 
             await self.db.commit()
             await self.db.refresh(active)
+            await log_event(current_user, "Update",
+                            f"Updated record: {active.quantity} token(s) {active.token} by price {active.price} USD. Total amount {active.amount} USD.")
             return active
 
         except Exception as e:
             await self.db.rollback()
             print(f"Error updating active: {e}")
             return None
-
 
     async def order_by_id(self, actives: list):
         # Получаем все записи по возрастанию текущего id
@@ -144,7 +150,6 @@ class ActivesService:
         await self.db.execute(text("DELETE FROM sqlite_sequence WHERE name='actives'"))
         await self.db.commit()
 
-
     async def order_by_id_rec(self, records: list):
         # Получаем все записи по возрастанию текущего id
         records = (await self.db.execute(
@@ -162,8 +167,7 @@ class ActivesService:
         await self.db.execute(text("DELETE FROM sqlite_sequence WHERE name='results'"))
         await self.db.commit()
 
-
-    async def sell_active(self, active_id, rec, form):
+    async def sell_active(self, active_id, current_user, rec, form):
         if rec:
             act_date_buy = rec.data
             act_date_sell = str(date.today())
@@ -173,13 +177,14 @@ class ActivesService:
                 quantity = form.quantity
                 price = form.price
                 profit = (float(form.quantity) * float(form.price)) - (
-                            float(form.quantity) * float(rec.price))
+                        float(form.quantity) * float(rec.price))
                 results = Results(data=act_date, token=token, quantity=quantity, price=price, profit=profit)
                 try:
                     self.db.add(results)
                     await self.db.commit()
-                    # logger.info(f'Active {token} were sold with profit {profit}.')
-                    await self.delete_active_by_id(active_id)
+                    await log_event(current_user, "Sell",
+                                    f"Sell record: {results.quantity} token(s) {results.token} by price {results.price} USD. Total profit {results.profit} USD.")
+                    await self.delete_active_by_id(active_id, current_user)
                     dat = float(form.quantity)
                     if dat < rec.quantity:  # Если продавать меньше общей суммы токенов(не все)
                         rec.quantity = rec.quantity - float(form.quantity)
@@ -188,6 +193,7 @@ class ActivesService:
                                           amount=rec.amount)
                         self.db.add(actives)
                         await self.db.commit()
+
                     return results
                 except Exception as e:
                     print(f"Error during creating record: {e}")

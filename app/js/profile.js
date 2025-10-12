@@ -1,16 +1,16 @@
 function openProfileModal() {
-  const user = window.currentUser || {};
-  const name = user.name || "—";
-  const email = user.email || "—";
-  const avatar = user.avatar || "/static/Images/default.png";
+    const user = window.currentUser || {};
+    const name = user.name || "—";
+    const email = user.email || "—";
+    const avatar = user.avatar || "/static/Images/default.png";
 
-  const container = document.getElementById('profileModalContainer');
-  container.innerHTML = `
+    const container = document.getElementById('profileModalContainer');
+    container.innerHTML = `
     <div class="modal-overlay active" data-modal="profile">
       <div class="modal-box profile-box">
         <button class="modal-close" onclick="closeModal(this)">×</button>
         <div class="profile-card">
-          <img src="/${avatar || 'static/Images/avatar.png'}" 
+          <img src="${avatar || 'static/Images/avatar.png'}" 
                alt="Avatar" class="profile-avatar">
           <h3 class="profile-title">User Profile</h3>
           <ul class="profile-list">
@@ -18,7 +18,7 @@ function openProfileModal() {
             <li><strong>Email:</strong>${email || ''}</li>
           </ul>
           <div class="profile-actions">
-            <a href="#" class="btn-update">Update</a>
+            <button onclick="openUpdateUserModal(window.currentUser)">Update</button>
             <a href="/delete_user" class="btn-delete">Delete</a>
             <a href="/logout" class="btn-logout">Logout</a>
           </div>
@@ -27,3 +27,5 @@ function openProfileModal() {
     </div>
   `;
 }
+
+

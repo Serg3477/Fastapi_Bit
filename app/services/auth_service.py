@@ -7,9 +7,11 @@ import os
 from werkzeug.utils import secure_filename
 
 from app.core import create_user_database, settings
+from app.dependencies import get_current_user
 from app.middleware.sessions import set_session_user
 from app.models import User
 from app.middleware import flash
+from app.services.history_service import log_event
 
 
 class AuthService:
@@ -34,14 +36,20 @@ class AuthService:
         user = result.scalars().first()
         if not user:
             flash(request, "There is no user registered with this name.", category="error")
+            await log_event(user, "Login",
+                            f"User: {user.name} trying to login without registration")
             return None
 
         pwd_context = CryptContext(schemes=["bcrypt"], deprecated="auto")
         if pwd_context.verify(form.psw, user.psw):
             set_session_user(request, user.id, remember=form.remember)
+            await log_event(user, "Login",
+                            f"User: {user.name} successfully logined")
             return user
         else:
             flash(request, "Incorrect password", category="error")
+            await log_event(user, "Login",
+                            f"User: {user.name} trying to login with incorrect password")
             return None
 
 
@@ -95,7 +103,8 @@ class AuthService:
 
                 # Сразу логиним пользователя
                 set_session_user(request, user.id, remember=getattr(form, "remember", False))
-
+                await log_event(user, "Register",
+                                f"User: {user.name} successfully registered")
                 return True
             except Exception as e:
                 await self.db.rollback()
@@ -119,3 +128,28 @@ class AuthService:
         # Сбрасываем счётчик AUTOINCREMENT в SQLite
         await self.db.execute(text("DELETE FROM sqlite_sequence WHERE name='actives'"))
         await self.db.commit()
+
+
+    async def update_user(self, form, request: Request) -> bool:
+        user = await get_current_user(request)
+        # Обновляем поля
+        user.name = form.name
+        user.email = form.email
+
+        # Обновляем пароль, если введён
+        if form.psw:
+            pwd_context = CryptContext(schemes=["bcrypt"], deprecated="auto")
+            user.psw = pwd_context.hash(form.psw)
+
+        # Обновляем аватар
+        if form.avatar and getattr(form.avatar, "filename", ""):
+            orig_name = secure_filename(form.avatar.filename)
+            file = f"{form.name}_{orig_name}"
+            avatar_path = os.path.join("Avatars", file)
+            os.makedirs(os.path.dirname(avatar_path), exist_ok=True)
+            with open(avatar_path, "wb") as f:
+                f.write(await form.avatar.read())
+            user.avatar = avatar_path
+
+        await self.db.merge(user)
+        return True

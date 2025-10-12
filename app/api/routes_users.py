@@ -13,6 +13,7 @@ from app.middleware.sessions import flash, get_flashed_messages, clear_session_u
 
 
 from app.services import AuthService
+from app.services.history_service import log_event
 
 users_router = APIRouter()
 templates = Jinja2Templates(directory="app/templates")
@@ -94,7 +95,7 @@ async def login(request: Request, db: AsyncSession = Depends(get_db)):
 @users_router.get("/profile")
 async def profile(request: Request, db=Depends(get_db)):
     messages = get_flashed_messages(request)
-    user_id = get_session_user(request)
+    user_id = get_current_user(request)
     if not user_id:
         return RedirectResponse(url="/login", status_code=303)
 
@@ -113,14 +114,18 @@ async def profile(request: Request, db=Depends(get_db)):
 
 
 @users_router.get("/logout")
-async def logout(request: Request):
+async def logout(request: Request, db=Depends(get_db)):
+    user = await get_current_user(request)
     clear_session_user(request)
     flash(request, "You have been logged out.", category="success")
+    await log_event(user, "Login",
+                    f"User: {user.name} successfully logged out")
     return RedirectResponse(url="/", status_code=303)
 
 
 @users_router.get("/delete_user")
 async def delete_user(request: Request, db=Depends(get_db)):
+    user = await get_current_user(request)
     user_id = get_session_user(request)
     if not user_id:
         return RedirectResponse(url="/login", status_code=303)
@@ -132,5 +137,49 @@ async def delete_user(request: Request, db=Depends(get_db)):
     # Очищаем сессию
     clear_session_user(request)
     flash(request, "Your account has been deleted.", category="info")
-
+    await log_event(user, "Login",
+                    f"User: {user.name} successfully deleted their account")
     return RedirectResponse(url="/", status_code=303)
+
+
+@users_router.api_route("/update_user", methods=["GET", "POST"])
+async def update(
+        request: Request,
+        db: AsyncSession = Depends(get_db),
+):
+    current_user = await get_current_user(request)
+    print("User found in route:", current_user.name)
+    messages = get_flashed_messages(request)
+    service = AuthService(db)
+
+    if not current_user:
+        print("В роуте!")
+        return RedirectResponse(url="/login", status_code=303)
+    print("User found in route:", current_user.email)
+    form = RegisterForm(request)
+    await form.load_data()
+    errors = form.errors
+
+    if request.method == "POST":
+        if not form.is_valid():
+            flash(request, "Incorrect field filling.", category="error")
+        else:
+            await service.update_user(form, request)
+            try:
+                await db.commit()
+                flash(request, "Profile updated successfully!", category="success")
+                await log_event(current_user, "Update", f"User {current_user.name} updated profile info")
+                return RedirectResponse(url="/", status_code=303)
+            except Exception as e:
+                await db.rollback()
+                flash(request, "Error updating profile", category="error")
+
+    return templates.TemplateResponse("index.html", {
+        "request": request,
+        "form": form,
+        "messages": messages,
+        "errors": errors,
+        "user": current_user,
+        "show_modal": True,
+        "title": "Update Profile"
+    })

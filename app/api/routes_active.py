@@ -70,7 +70,7 @@ async def create_post(
 
     if request.method == "POST":
         if form.is_valid(request):
-            result = await service.create_active(form)
+            result = await service.create_active(current_user, form)
 
             if not result:
                 flash(request, "Error creating active", category="error")
@@ -94,10 +94,11 @@ async def delete_active(
         active_id: int,
         request: Request,
         db: AsyncSession = Depends(get_user_db),
+        current_user: User = Depends(get_current_user)
 ):
     service = ActivesService(db)
     actives = await service.get_all_actives(request)
-    success = await service.delete_active_by_id(active_id)
+    success = await service.delete_active_by_id(active_id, current_user)
     await service.order_by_id(actives)
     if success:
         flash(request, "Record deleted successfully!", category="success")
@@ -109,11 +110,12 @@ async def delete_active(
 @active_router.get("/delRec/{result_id}")
 async def delete_result(
         result_id: int, request:
-        Request, db: AsyncSession = Depends(get_user_db)
+        Request, db: AsyncSession = Depends(get_user_db),
+        current_user: User = Depends(get_current_user)
 ):
     service = ActivesService(db)
     results = await service.get_all_results(request)
-    success = await service.delete_result_by_id(result_id)
+    success = await service.delete_result_by_id(result_id, current_user)
     await service.order_by_id_rec(results)
     if success:
         flash(request, "Record deleted successfully!", category="success")
@@ -146,7 +148,7 @@ async def update(
 
     if request.method == "POST" and not errors:
 
-        updated = await service.update_active(active_id, form)
+        updated = await service.update_active(active_id, current_user, form)
         if updated:
             flash(request, "Updated successfully!", category="success")
         else:
@@ -218,7 +220,7 @@ async def sell(
     }
     if request.method == "POST" and not errors:
         service = ActivesService(db)
-        updated = await service.sell_active(active_id, rec, form)
+        updated = await service.sell_active(active_id, current_user, rec, form)
         if updated:
             flash(request, "Recording results successfully!", category="success")
 
