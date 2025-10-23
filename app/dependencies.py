@@ -18,15 +18,12 @@ async def get_db() -> AsyncGenerator[AsyncSession, None]:
 async def get_current_user(request: Request, db: AsyncSession = Depends(get_db)):
     user_id = get_session_user(request)
     if not user_id:
-        print("В dep!")
         return None
     async with SessionUsers() as session:
         result = await session.execute(select(User).where(User.id == user_id))
         user = result.scalar_one_or_none()
         await session.commit()
-        print("В depend!")
         if not user:
-            print("В dependencies!")
             clear_session_user(request)  # 👈 сбрасываем сессию, если пользователь не найден
             return None
         print("В Dependencies!")

@@ -6,7 +6,8 @@ body, html {
 }
 
 .welcome-overlay {
-  background: url("/static/Images/Background/circuitry.png") no-repeat center center/cover;
+  background: url("/static/Images/Background/Copilot_2.png") no-repeat center center/cover;
+  background-size: cover;
   height: 100%;
   display: flex;
   align-items: center;

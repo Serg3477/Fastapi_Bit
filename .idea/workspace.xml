@@ -4,13 +4,14 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="49c0dc9b-95dd-450b-a66c-9c08dca1f8da" name="Changes" comment="Adding a router &quot;Changing user data&quot;.">
-      <change afterPath="$PROJECT_DIR$/app/js/history.js" afterDir="false" />
+    <list default="true" id="49c0dc9b-95dd-450b-a66c-9c08dca1f8da" name="Changes" comment="Adding a router &quot;Get data history&quot;.">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/api/routes_users.py" beforeDir="false" afterPath="$PROJECT_DIR$/app/api/routes_users.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/core/init_db.py" beforeDir="false" afterPath="$PROJECT_DIR$/app/core/init_db.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/app/dependencies.py" beforeDir="false" afterPath="$PROJECT_DIR$/app/dependencies.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/static/css/modal.css" beforeDir="false" afterPath="$PROJECT_DIR$/app/static/css/modal.css" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/templates/base1.html" beforeDir="false" afterPath="$PROJECT_DIR$/app/templates/base1.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/main.py" beforeDir="false" afterPath="$PROJECT_DIR$/app/main.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/middleware/sessions.py" beforeDir="false" afterPath="$PROJECT_DIR$/app/middleware/sessions.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/static/css/welcome.css" beforeDir="false" afterPath="$PROJECT_DIR$/app/static/css/welcome.css" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/templates/welcome.html" beforeDir="false" afterPath="$PROJECT_DIR$/app/templates/welcome.html" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -55,6 +56,7 @@
     &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
     &quot;RunOnceActivity.TerminalTabsStorage.copyFrom.TerminalArrangementManager.252&quot;: &quot;true&quot;,
     &quot;RunOnceActivity.git.unshallow&quot;: &quot;true&quot;,
+    &quot;com.intellij.ml.llm.matterhorn.ej.ui.settings.DefaultModelSelectionForGA.v1&quot;: &quot;true&quot;,
     &quot;git-widget-placeholder&quot;: &quot;main&quot;,
     &quot;ignore.virus.scanning.warn.message&quot;: &quot;true&quot;,
     &quot;junie.onboarding.icon.badge.shown&quot;: &quot;true&quot;,
@@ -84,8 +86,8 @@
   <component name="SharedIndexes">
     <attachedChunks>
       <set>
-        <option value="bundled-js-predefined-d6986cc7102b-9c94529fcfe0-JavaScript-PY-252.26199.168" />
-        <option value="bundled-python-sdk-b3d66beaba9a-c6efb3732140-com.jetbrains.pycharm.pro.sharedIndexes.bundled-PY-252.26199.168" />
+        <option value="bundled-js-predefined-d6986cc7102b-3aa1da707db6-JavaScript-PY-252.26830.99" />
+        <option value="bundled-python-sdk-164cda30dcd9-0af03a5fa574-com.jetbrains.pycharm.pro.sharedIndexes.bundled-PY-252.26830.99" />
       </set>
     </attachedChunks>
   </component>
@@ -106,7 +108,12 @@
       <workItem from="1759899715961" duration="16544000" />
       <workItem from="1760162617316" duration="16746000" />
       <workItem from="1760187507713" duration="10772000" />
-      <workItem from="1760249406025" duration="16954000" />
+      <workItem from="1760249406025" duration="17047000" />
+      <workItem from="1760368443159" duration="524000" />
+      <workItem from="1761050247652" duration="564000" />
+      <workItem from="1761050836470" duration="4049000" />
+      <workItem from="1761138353390" duration="8914000" />
+      <workItem from="1761148433773" duration="2858000" />
     </task>
     <task id="LOCAL-00001" summary="First commit.&#10;Beginning to make a project in FastAPI.">
       <option name="closed" value="true" />
@@ -172,7 +179,15 @@
       <option name="project" value="LOCAL" />
       <updated>1760261201814</updated>
     </task>
-    <option name="localTasksCounter" value="9" />
+    <task id="LOCAL-00009" summary="Adding a router &quot;Get data history&quot;.">
+      <option name="closed" value="true" />
+      <created>1760266456699</created>
+      <option name="number" value="00009" />
+      <option name="presentableId" value="LOCAL-00009" />
+      <option name="project" value="LOCAL" />
+      <updated>1760266456699</updated>
+    </task>
+    <option name="localTasksCounter" value="10" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -198,7 +213,8 @@
     <MESSAGE value="Project refinement: interface, modal windows (JS), login, register" />
     <MESSAGE value="Project refinement: updating interface, modal windows (JS), login, register. Add history/logging" />
     <MESSAGE value="Adding a router &quot;Changing user data&quot;." />
-    <option name="LAST_COMMIT_MESSAGE" value="Adding a router &quot;Changing user data&quot;." />
+    <MESSAGE value="Adding a router &quot;Get data history&quot;." />
+    <option name="LAST_COMMIT_MESSAGE" value="Adding a router &quot;Get data history&quot;." />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
@@ -210,6 +226,10 @@
         <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
           <url>file://$PROJECT_DIR$/app/main.py</url>
           <option name="timeStamp" value="2" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
+          <url>file://$PROJECT_DIR$/app/api/__init__.py</url>
+          <option name="timeStamp" value="3" />
         </line-breakpoint>
       </breakpoints>
     </breakpoint-manager>

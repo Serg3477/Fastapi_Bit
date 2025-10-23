@@ -10,13 +10,15 @@ from app.core import settings
 from app.core import init_db
 from app.api import active_router
 from app.api import users_router
-from app.middleware import get_flashed_messages
+from app.middleware.sessions import template_context_processor
+
 
 # 👇 lifespan: замена on_event("startup") Это функция, инициализации базы (например, Base.metadata.create_all),
 # подключения к внешним сервисам, выполнения миграций, логирования, и т.д.
 @asynccontextmanager
 async def lifespan(app: FastAPI):
     await init_db()
+    create_history_database()
     yield
     # можно добавить shutdown-логику
 
@@ -39,15 +41,9 @@ templates = Jinja2Templates(directory="app/templates")
 # Подключаем middleware для сессий
 app.add_middleware(SessionMiddleware, secret_key=settings.SECRET_KEY)
 
-# Возвращает список сообщений, которые были сохранены через flash().
-def template_context_processor(request: Request):
-    return {
-        "messages": get_flashed_messages(request)
-    }
-
 # Добавляет template_context_processor как глобальную переменную в Jinja2.
 templates.env.globals["template_context_processor"] = template_context_processor
 
-create_history_database()
+
 
 

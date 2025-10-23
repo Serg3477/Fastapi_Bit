@@ -31,6 +31,12 @@ def clear_session_user(request: Request):
     request.session.pop("user_id", None)
     request.session.pop("remember", None)
 
+# Возвращает список сообщений, которые были сохранены через flash().
+def template_context_processor(request: Request):
+    return {
+        "messages": get_flashed_messages(request)
+    }
+
 
 #  Сохраняет flash-сообщение в сессии, сообщение сохраняется в cookie
 # category — может быть "info", "success", "error" и т.д. Используется для CSS-классов.
