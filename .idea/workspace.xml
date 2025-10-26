@@ -5,12 +5,15 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="49c0dc9b-95dd-450b-a66c-9c08dca1f8da" name="Changes" comment="Adding a router &quot;Get data history&quot;.">
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/users_db/db_1.db" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/users_db/db_2.db" beforeDir="false" afterPath="$PROJECT_DIR$/app/users_db/db_2.db" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/users_db/db_3.db" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/history.db" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/users.db" beforeDir="false" />
+      <change afterPath="$PROJECT_DIR$/history.db" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/core/__init__.py" beforeDir="false" afterPath="$PROJECT_DIR$/app/core/__init__.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/core/db_creator.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/core/db_users.py" beforeDir="false" afterPath="$PROJECT_DIR$/app/core/db_users.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/core/init_db.py" beforeDir="false" afterPath="$PROJECT_DIR$/app/core/init_db.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/main.py" beforeDir="false" afterPath="$PROJECT_DIR$/app/main.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/models/history.py" beforeDir="false" afterPath="$PROJECT_DIR$/app/models/history.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/services/auth_service.py" beforeDir="false" afterPath="$PROJECT_DIR$/app/services/auth_service.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/users_db/db_2.db" beforeDir="false" afterPath="$PROJECT_DIR$/users.db" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -25,6 +28,9 @@
         <option value="JavaScript File" />
       </list>
     </option>
+  </component>
+  <component name="Git.Merge.Settings">
+    <option name="BRANCH" value="dev" />
   </component>
   <component name="Git.Settings">
     <option name="RECENT_BRANCH_BY_REPOSITORY">
@@ -192,7 +198,15 @@
       <option name="project" value="LOCAL" />
       <updated>1760266456699</updated>
     </task>
-    <option name="localTasksCounter" value="10" />
+    <task id="LOCAL-00010" summary="Branch main. Base version without refactoring.">
+      <option name="closed" value="true" />
+      <created>1761478049525</created>
+      <option name="number" value="00010" />
+      <option name="presentableId" value="LOCAL-00010" />
+      <option name="project" value="LOCAL" />
+      <updated>1761478049525</updated>
+    </task>
+    <option name="localTasksCounter" value="11" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -219,7 +233,8 @@
     <MESSAGE value="Project refinement: updating interface, modal windows (JS), login, register. Add history/logging" />
     <MESSAGE value="Adding a router &quot;Changing user data&quot;." />
     <MESSAGE value="Adding a router &quot;Get data history&quot;." />
-    <option name="LAST_COMMIT_MESSAGE" value="Adding a router &quot;Get data history&quot;." />
+    <MESSAGE value="Branch main. Base version without refactoring." />
+    <option name="LAST_COMMIT_MESSAGE" value="Branch main. Base version without refactoring." />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>

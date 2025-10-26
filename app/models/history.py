@@ -1,5 +1,4 @@
-from sqlalchemy import Column, Integer, String, DateTime, ForeignKey
-from sqlalchemy.orm import relationship
+from sqlalchemy import Column, Integer, String, DateTime
 from app.core.db_history import HistoryBase
 
 
@@ -13,4 +12,3 @@ class UserHistory(HistoryBase):
     details = Column(String)
 
 
-    # user = relationship("User", back_populates="logs")

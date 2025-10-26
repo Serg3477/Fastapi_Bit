@@ -6,7 +6,7 @@ from typing import List
 import os
 from werkzeug.utils import secure_filename
 
-from app.core import create_user_database, settings
+from app.core import create_tenant_database, settings
 from app.dependencies import get_current_user
 from app.middleware.sessions import set_session_user
 from app.models import User
@@ -95,7 +95,7 @@ class AuthService:
                 db_filename = f"db_{user.id}.db"
                 db_path = os.path.join(settings.USER_DB_DIR, db_filename)
                 os.makedirs(settings.USER_DB_DIR, exist_ok=True)
-                create_user_database(db_path)
+                create_tenant_database(db_path)
 
                 # Обновляем поле db_filename
                 user.db_filename = db_path
