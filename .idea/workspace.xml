@@ -4,12 +4,20 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="49c0dc9b-95dd-450b-a66c-9c08dca1f8da" name="Changes" comment="Refactor Core.db">
-      <change beforePath="$PROJECT_DIR$/app/core/db_history.py" beforeDir="false" afterPath="$PROJECT_DIR$/app/core/db_history.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/core/db_users.py" beforeDir="false" afterPath="$PROJECT_DIR$/app/core/db_users.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/core/init_db.py" beforeDir="false" afterPath="$PROJECT_DIR$/app/core/init_db.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/main.py" beforeDir="false" afterPath="$PROJECT_DIR$/app/main.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/services/auth_service.py" beforeDir="false" afterPath="$PROJECT_DIR$/app/services/auth_service.py" afterDir="false" />
+    <list default="true" id="49c0dc9b-95dd-450b-a66c-9c08dca1f8da" name="Changes" comment="Merge remote-tracking branch 'origin/dev' into dev&#10;&#10;# Conflicts:&#10;#&#9;.idea/workspace.xml&#10;#&#9;app/core/init_db.py&#10;#&#9;app/main.py&#10;#&#9;app/services/auth_service.py&#10;#&#9;history.db">
+      <change beforePath="$PROJECT_DIR$/app/api/routes_active.py" beforeDir="false" afterPath="$PROJECT_DIR$/app/api/routes_active.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/api/routes_admin.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/api/routes_users.py" beforeDir="false" afterPath="$PROJECT_DIR$/app/api/routes_users.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/dependencies.py" beforeDir="false" afterPath="$PROJECT_DIR$/app/dependencies.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/middleware/sessions.py" beforeDir="false" afterPath="$PROJECT_DIR$/app/middleware/sessions.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/schemas/__init__.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/schemas/actives.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/schemas/login.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/schemas/register.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/schemas/sell.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/schemas/update.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/users_db/db_2.db" beforeDir="false" afterPath="$PROJECT_DIR$/app/users_db/db_2.db" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/users_db/db_4.db" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/history.db" beforeDir="false" afterPath="$PROJECT_DIR$/history.db" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/users.db" beforeDir="false" afterPath="$PROJECT_DIR$/users.db" afterDir="false" />
     </list>
@@ -220,7 +228,15 @@
       <option name="project" value="LOCAL" />
       <updated>1761487132273</updated>
     </task>
-    <option name="localTasksCounter" value="13" />
+    <task id="LOCAL-00013" summary="Merge remote-tracking branch 'origin/dev' into dev&#10;&#10;# Conflicts:&#10;#&#9;.idea/workspace.xml&#10;#&#9;app/core/init_db.py&#10;#&#9;app/main.py&#10;#&#9;app/services/auth_service.py&#10;#&#9;history.db">
+      <option name="closed" value="true" />
+      <created>1761490295056</created>
+      <option name="number" value="00013" />
+      <option name="presentableId" value="LOCAL-00013" />
+      <option name="project" value="LOCAL" />
+      <updated>1761490295056</updated>
+    </task>
+    <option name="localTasksCounter" value="14" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">

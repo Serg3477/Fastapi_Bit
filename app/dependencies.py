@@ -10,8 +10,14 @@ from app.middleware.sessions import get_session_user, clear_session_user
 from app.core.db_users import SessionUsers
 
 
+# Получаем сессию для работы с пользователями
 async def get_db() -> AsyncGenerator[AsyncSession, None]:
     async with SessionUsers() as session:
+        yield session
+
+# Получаем сессию для работы с историей
+async def get_history_db() -> AsyncGenerator[AsyncSession, None]:
+    async with SessionHistory() as session:
         yield session
 
 # Получаем текущего пользователя из сессии
@@ -26,8 +32,6 @@ async def get_current_user(request: Request, db: AsyncSession = Depends(get_db))
         if not user:
             clear_session_user(request)  # 👈 сбрасываем сессию, если пользователь не найден
             return None
-        print("В Dependencies!")
-        print("User found:", user.name)
         return user
 
 # Получаем индивидуальную сессию для пользователя
@@ -39,7 +43,3 @@ async def get_user_db(user: User = Depends(get_current_user)) -> AsyncGenerator[
     async with SessionLocal() as session:
         yield session
 
-# Получаем сессию для работы с историей
-async def get_history_db():
-    async with SessionHistory() as session:
-        yield session

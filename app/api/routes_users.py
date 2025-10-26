@@ -19,14 +19,6 @@ from app.services.history_service import log_event
 users_router = APIRouter()
 templates = Jinja2Templates(directory="app/templates")
 
-menu = [
-    {"name": "Main page", "url": "/"},
-    {"name": "Create new record", "url": "/create"},
-    {"name": "Show profits", "url": "/main"},
-    {"name": "Authorization", "url": "/login"},
-    {"name": "Profile", "url": "/profile"},
-    {"name": "Admin panel", "url": "/admin/login"}
-]
 
 
 @users_router.api_route("/register", methods=["GET", "POST"])

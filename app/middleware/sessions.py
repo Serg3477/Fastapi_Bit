@@ -1,14 +1,8 @@
 from fastapi import Request, HTTPException, status, Depends
-from sqlalchemy import select
-from sqlalchemy.ext.asyncio.session import AsyncSession
-
-from app.core import SessionUsers
-from app.models import User
 
 
 def get_session_user(request: Request) -> int | None:
     user_id = request.session.get("user_id")
-    print("→ session user_id:", user_id)
     return user_id
 
 
@@ -46,7 +40,6 @@ def flash(request: Request, message: str, category: str = "info"):
     request.session["_flashes"].append((category, message))
 
 
-# чтобы узнать, авторизован ли пользователь
 def get_flashed_messages(request: Request) -> list[tuple[str, str]]:
     # удаляет список сообщений из сессии и возвращает его. Если сообщений нет, возвращает пустой список
     return request.session.pop("_flashes", [])

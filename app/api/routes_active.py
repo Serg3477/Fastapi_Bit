@@ -8,7 +8,7 @@ from starlette.responses import HTMLResponse
 from app.dependencies import get_user_db, get_current_user
 from app.forms import AddActiveForm
 from app.forms import SellActiveForm
-from app.middleware.sessions import get_session_user, flash, get_flashed_messages
+from app.middleware.sessions import flash, get_flashed_messages
 from app.models import Actives, User
 from app.models import Results
 from app.services import ActivesService
@@ -17,16 +17,6 @@ from app.services import ActivesService
 
 active_router = APIRouter()
 templates = Jinja2Templates(directory="app/templates")
-
-menu = [
-    {"name": "Main page", "url": "/"},
-    {"name": "Create new record", "url": "/create"},
-    {"name": "Show profits", "url": "/main"},
-    {"name": "Authorization", "url": "/login"},
-    {"name": "Profile", "url": "/profile"},
-    {"name": "Admin panel", "url": "/admin/login"}
-]
-
 
 
 @active_router.get("/")
