@@ -7,7 +7,6 @@ from app.core.init_db import create_history_database
 
 
 from app.core import settings, create_user_database
-from app.core import init_db
 from app.api import active_router
 from app.api import users_router
 from app.middleware.sessions import template_context_processor
@@ -17,8 +16,8 @@ from app.middleware.sessions import template_context_processor
 # подключения к внешним сервисам, выполнения миграций, логирования, и т.д.
 @asynccontextmanager
 async def lifespan(app: FastAPI):
-    await create_user_database()                # ← создаёт users.db (таблица users)
-    create_history_database()      # ← создаёт history.db (таблица history)
+    await create_user_database()         # ← создаёт users.db (таблица users)
+    await create_history_database()      # ← создаёт history.db (таблица history)
     yield
     # можно добавить shutdown-логику
 

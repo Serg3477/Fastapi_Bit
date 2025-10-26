@@ -95,7 +95,7 @@ class AuthService:
                 db_filename = f"db_{user.id}.db"
                 db_path = os.path.join(settings.USER_DB_DIR, db_filename)
                 os.makedirs(settings.USER_DB_DIR, exist_ok=True)
-                create_tenant_database(db_path)
+                await create_tenant_database(db_path)
 
                 # Обновляем поле db_filename
                 user.db_filename = db_path

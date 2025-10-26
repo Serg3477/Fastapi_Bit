@@ -2,7 +2,6 @@ from sqlalchemy.ext.asyncio import AsyncSession, create_async_engine, async_sess
 from sqlalchemy.orm import declarative_base
 from app.core.settings import settings
 
-
 UserBase = declarative_base()
 
 engine_users = create_async_engine(settings.USER_DB_URL, echo=True)
