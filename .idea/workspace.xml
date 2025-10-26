@@ -6,12 +6,11 @@
   <component name="ChangeListManager">
     <list default="true" id="49c0dc9b-95dd-450b-a66c-9c08dca1f8da" name="Changes" comment="Adding a router &quot;Get data history&quot;.">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/core/init_db.py" beforeDir="false" afterPath="$PROJECT_DIR$/app/core/init_db.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/dependencies.py" beforeDir="false" afterPath="$PROJECT_DIR$/app/dependencies.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/main.py" beforeDir="false" afterPath="$PROJECT_DIR$/app/main.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/middleware/sessions.py" beforeDir="false" afterPath="$PROJECT_DIR$/app/middleware/sessions.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/static/css/welcome.css" beforeDir="false" afterPath="$PROJECT_DIR$/app/static/css/welcome.css" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/templates/welcome.html" beforeDir="false" afterPath="$PROJECT_DIR$/app/templates/welcome.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/users_db/db_1.db" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/users_db/db_2.db" beforeDir="false" afterPath="$PROJECT_DIR$/app/users_db/db_2.db" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/users_db/db_3.db" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/history.db" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/users.db" beforeDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -28,6 +27,11 @@
     </option>
   </component>
   <component name="Git.Settings">
+    <option name="RECENT_BRANCH_BY_REPOSITORY">
+      <map>
+        <entry key="$PROJECT_DIR$" value="main" />
+      </map>
+    </option>
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
   </component>
   <component name="GitHubPullRequestSearchHistory">{
@@ -57,7 +61,7 @@
     &quot;RunOnceActivity.TerminalTabsStorage.copyFrom.TerminalArrangementManager.252&quot;: &quot;true&quot;,
     &quot;RunOnceActivity.git.unshallow&quot;: &quot;true&quot;,
     &quot;com.intellij.ml.llm.matterhorn.ej.ui.settings.DefaultModelSelectionForGA.v1&quot;: &quot;true&quot;,
-    &quot;git-widget-placeholder&quot;: &quot;main&quot;,
+    &quot;git-widget-placeholder&quot;: &quot;dev&quot;,
     &quot;ignore.virus.scanning.warn.message&quot;: &quot;true&quot;,
     &quot;junie.onboarding.icon.badge.shown&quot;: &quot;true&quot;,
     &quot;last_opened_file_path&quot;: &quot;/home/serg/PycharmProjects/GPT/Flask_Finish&quot;,
@@ -114,6 +118,7 @@
       <workItem from="1761050836470" duration="4049000" />
       <workItem from="1761138353390" duration="8914000" />
       <workItem from="1761148433773" duration="2858000" />
+      <workItem from="1761474001936" duration="1175000" />
     </task>
     <task id="LOCAL-00001" summary="First commit.&#10;Beginning to make a project in FastAPI.">
       <option name="closed" value="true" />
